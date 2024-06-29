@@ -1,3 +1,87 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	* {
+		box-sizing: border-box;
+		@apply font-sans;
+	}
+
+	::-webkit-scrollbar {
+		/* Customize the scrollbar width */
+		width: 6px;
+	}
+
+	::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		height: 30px;
+		background-color: #d3d4dd;
+		border-radius: 3px;
+	}
+}
+
+@layer components {
+	.page-heading {
+		@apply mb-8 w-full text-3xl font-bold text-dark/90;
+	}
+	.button-group {
+		@apply flex w-fit flex-row gap-2 rounded-md bg-[#F5F6FA] p-3;
+	}
+	.button-sm {
+		@apply flex cursor-pointer flex-row items-center justify-center rounded-md border border-solid border-dark/10 bg-[transparent] bg-none px-3 py-2 text-sm font-semibold text-dark/90 outline-none hover:bg-dark hover:text-white;
+	}
+	.card {
+		@apply flex flex-col rounded-md bg-[#F5F6FA] p-4;
+	}
+	.card-heading {
+		@apply mb-2 text-sm font-medium uppercase tracking-wider text-dark/80;
+	}
+	.input-base {
+		@apply rounded-md border border-solid border-dark/10 bg-white px-3 py-3 text-base font-medium text-dark outline-none placeholder:text-[#999999] hover:border-[#999999];
+	}
+}
+
+@layer utilities {
+	.multi-gradient {
+		background: linear-gradient(
+				217deg,
+				rgb(255 0 0 / 80%),
+				rgb(255 0 0 / 0%) 70.71%
+			),
+			linear-gradient(
+				127deg,
+				rgb(0 255 0 / 80%),
+				rgb(0 255 0 / 0%) 70.71%
+			),
+			linear-gradient(
+				336deg,
+				rgb(0 0 255 / 80%),
+				rgb(0 0 255 / 0%) 70.71%
+			);
+	}
+	.gold-gradient {
+		background: linear-gradient(
+			-72deg,
+			#ffde45,
+			#dbbb2d 23%,
+			#fff5c9 45%,
+			#ddbe33
+		);
+	}
+	.silver-gradient {
+		background: linear-gradient(
+			-72deg,
+			#a1a1a1,
+			#ffffff 15%,
+			#dedede 20%,
+			#dedede 40%,
+			#ffffff 60%,
+			#dedede 85%,
+			#a1a1a1
+		);
+	}
+}
