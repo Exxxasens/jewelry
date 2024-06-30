@@ -13,7 +13,7 @@ import Button from "./Button";
 
 const Sidebar = () => {
 	return (
-		<div className="sticky top-0 flex h-full min-h-screen w-full max-w-xs flex-col bg-[#F5F6FA] p-8">
+		<div className="sticky top-0 flex h-full min-h-screen w-full max-w-xs flex-col bg-[#F2F1F0] p-8">
 			<div className="flex w-full items-center justify-center">
 				{/* <Logo textSize="text-3xl" /> */}
 			</div>

@@ -1,9 +1,5 @@
-import {
-	type Theme,
-	type ClassNamesConfig,
-	type ThemeConfig,
-} from "react-select";
-import selectTheme, { SelectTheme } from "./selectTheme";
+import { type Theme } from "react-select";
+import selectTheme, { type SelectTheme } from "./selectTheme";
 import { type ColorOption } from "./productColorOptions";
 
 // const dot = (color = "transparent") => ({
@@ -32,14 +28,15 @@ const colorSelectTheme = {
 		colors: {
 			...theme.colors,
 			primary25: "#F5F6FA",
-			primary50: "#dee2ec",
+			primary50: "#F2F1F0",
+			primary75: "#999999",
 			primary: "#dee2ec",
 		},
 	}),
 	classNames: {
 		...selectTheme.classNames,
 		control: ({ isFocused }) =>
-			`!shadow-none ${isFocused ? "!border-[#999999]" : "!border-dark/10"}`,
+			`!shadow-none !bg-[#F2F1F0] ${isFocused ? "!border-dark/10" : "!border-[transparent]"}`,
 		singleValue: ({ data }) =>
 			`!text-dark/80 font-medium !py-0 ${dot(data.style)}`,
 		valueContainer: ({ isMulti }) => `${isMulti ? "!p-2.5" : "!p-3"}`,

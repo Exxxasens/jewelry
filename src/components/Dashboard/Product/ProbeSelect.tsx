@@ -19,7 +19,7 @@ const ProbeSelect: React.FC<ProbeSelectProps> = ({ control, probes }) => {
 							<button
 								key={materialProbe}
 								type="button"
-								className={`button-sm ${isSelected ? "bg-dark text-white" : "bg-white"}`}
+								className={`button-sm border-none ${isSelected ? "bg-dark text-white" : "bg-[#F2F1F0]"}`}
 								onBlur={onBlur}
 								onClick={() => onChange(materialProbe)}
 							>

@@ -25,7 +25,7 @@ const CreatableBrandSelect: React.FC<CreatableBrandSelectProps> = (props) => {
 		return data.map((brand) => {
 			return {
 				label: brand.name,
-				value: brand.id,
+				value: brand.name,
 			};
 		});
 	}

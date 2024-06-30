@@ -61,293 +61,285 @@ const CreateProductPage = () => {
 			<h2 className="mb-8 text-2xl font-bold text-dark">Новый товар</h2>
 			<FormProvider {...methods}>
 				<form
-					className="flex flex-row gap-4"
+					className="flex flex-row gap-6"
 					onSubmit={handleSubmit(onFormSubmit)}
 				>
 					<div className="flex w-full max-w-screen-lg flex-col gap-4">
 						<div className="flex flex-col">
-							<div className="card">
-								<p className="card-heading">Наименование:</p>
-								<input
-									className="input-base"
-									placeholder="Наименование товара"
-									{...register("name")}
-								/>
-								{errors.name?.message && (
-									<p className="error-container ml-1 mt-2 text-sm">
-										{errors.name?.message}
-									</p>
-								)}
-							</div>
+							<p className="card-heading">Наименование:</p>
+							<input
+								className="input-base"
+								placeholder="Наименование товара"
+								{...register("name")}
+							/>
+							{errors.name?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.name?.message}
+								</p>
+							)}
 						</div>
 						<div className="flex flex-col">
-							<div className="card">
-								<p className="card-heading">Категория:</p>
-								<Controller
-									name="category"
-									control={control}
-									render={({
-										field: { value, onBlur, onChange },
-									}) => {
-										const selected =
-											productCategoriesOptions.find(
-												(v) => v.value === value,
-											);
-										return (
-											<Select
-												{...(selectTheme as SelectTheme<CategoriesOption>)}
-												placeholder="Выберите категорию"
-												options={
-													productCategoriesOptions
-												}
-												isMulti={false}
-												isClearable={true}
-												isSearchable={true}
-												value={selected}
-												onBlur={onBlur}
-												onChange={(option) =>
-													onChange(option?.value)
-												}
-											/>
+							<p className="card-heading">Категория:</p>
+							<Controller
+								name="category"
+								control={control}
+								render={({
+									field: { value, onBlur, onChange },
+								}) => {
+									const selected =
+										productCategoriesOptions.find(
+											(v) => v.value === value,
 										);
-									}}
-								/>
-								{errors.category?.message && (
-									<p className="error-container ml-1 mt-2 text-sm">
-										{errors.category?.message}
-									</p>
-								)}
-							</div>
+									return (
+										<Select
+											{...(selectTheme as SelectTheme<CategoriesOption>)}
+											placeholder="Выберите категорию"
+											options={productCategoriesOptions}
+											isMulti={false}
+											isClearable={true}
+											isSearchable={true}
+											value={selected}
+											onBlur={onBlur}
+											onChange={(option) =>
+												onChange(option?.value)
+											}
+										/>
+									);
+								}}
+							/>
+							{errors.category?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.category?.message}
+								</p>
+							)}
 						</div>
 						<div className="flex flex-col">
-							<div className="card">
-								<p className="card-heading">Бренд:</p>
+							<p className="card-heading">Бренд:</p>
 
-								<Controller
-									name="brand"
-									control={control}
-									render={({
-										field: { value, onBlur, onChange },
-									}) => {
-										const selected = value
-											? {
-													value,
-													label: value,
-												}
-											: undefined;
+							<Controller
+								name="brand"
+								control={control}
+								render={({
+									field: { value, onBlur, onChange },
+								}) => {
+									const selected = value
+										? {
+												value,
+												label: value,
+											}
+										: undefined;
 
-										return (
-											<CreatableBrandSelect
-												value={selected}
-												onBlur={onBlur}
-												onChange={(newValue) =>
-													onChange(newValue?.value)
-												}
-											/>
-										);
-									}}
-								/>
+									return (
+										<CreatableBrandSelect
+											value={selected}
+											onBlur={onBlur}
+											onChange={(newValue) =>
+												onChange(newValue?.value)
+											}
+										/>
+									);
+								}}
+							/>
 
-								{errors.brand?.message && (
-									<p className="error-container ml-1 mt-2 text-sm">
-										{errors.brand?.message}
-									</p>
-								)}
-							</div>
+							{errors.brand?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.brand?.message}
+								</p>
+							)}
 						</div>
 
 						<h3 className="mt-4 text-xl font-semibold text-dark/90">
 							Характеристики
 						</h3>
 						<div className="flex flex-col">
-							<div className="card">
-								<p className="card-heading">Цвет:</p>
+							<p className="card-heading">Цвет:</p>
 
-								<Controller
-									name="color"
-									control={control}
-									render={({
-										field: { value, onBlur, onChange },
-									}) => {
-										const selected =
-											productColorOptions.find(
-												(option) =>
-													option.value === value,
-											);
-										return (
-											<ColorSelect
-												value={selected}
-												onBlur={onBlur}
-												onChange={(option) =>
-													onChange(option?.value)
-												}
-											/>
-										);
-									}}
-								/>
-
-								{errors.color?.message && (
-									<p className="error-container ml-1 mt-2 text-sm">
-										{errors.color?.message}
-									</p>
-								)}
-							</div>
-						</div>
-						<div className="flex flex-col">
-							<div className="card">
-								<p className="card-heading">Материал:</p>
-								<Controller
-									name="material"
-									control={control}
-									render={({
-										field: { value, onBlur, onChange },
-									}) => {
-										const selected =
-											productMaterialOptions.find(
-												(option) =>
-													option.value === value,
-											);
-										return (
-											<MaterialSelect
-												value={selected}
-												onBlur={onBlur}
-												onChange={(option) =>
-													onChange(option?.value)
-												}
-											/>
-										);
-									}}
-								/>
-								{errors.color?.message && (
-									<p className="error-container ml-1 mt-2 text-sm">
-										{errors.color?.message}
-									</p>
-								)}
-								<div className="mt-4">
-									<Probe
-										control={control}
-										resetField={resetField}
-									/>
-								</div>
-							</div>
-						</div>
-
-						<div className="flex flex-col">
-							<div className="card">
-								<p className="card-heading">Вставка:</p>
-
-								<Controller
-									name="inserts"
-									control={control}
-									render={({
-										field: { value, onBlur, onChange },
-									}) => {
-										const selectedValues: InsertOption[] =
-											[];
-
-										value.forEach((v) => {
-											if (v in InsertsEnum) {
-												const foundOption =
-													productInsertOptions.find(
-														(option) =>
-															// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-															option.value === v,
-													);
-												if (foundOption)
-													return selectedValues.push(
-														foundOption,
-													);
+							<Controller
+								name="color"
+								control={control}
+								render={({
+									field: { value, onBlur, onChange },
+								}) => {
+									const selected = productColorOptions.find(
+										(option) => option.value === value,
+									);
+									return (
+										<ColorSelect
+											value={selected}
+											onBlur={onBlur}
+											onChange={(option) =>
+												onChange(option?.value)
 											}
+										/>
+									);
+								}}
+							/>
 
-											return selectedValues.push({
-												value: v,
-												label: v,
-											});
-										});
+							{errors.color?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.color?.message}
+								</p>
+							)}
+						</div>
+						<div className="flex flex-col">
+							<p className="card-heading">Материал:</p>
+							<Controller
+								name="material"
+								control={control}
+								render={({
+									field: { value, onBlur, onChange },
+								}) => {
+									const selected =
+										productMaterialOptions.find(
+											(option) => option.value === value,
+										);
+									return (
+										<MaterialSelect
+											value={selected}
+											onBlur={onBlur}
+											onChange={(option) =>
+												onChange(option?.value)
+											}
+										/>
+									);
+								}}
+							/>
+							{errors.color?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.color?.message}
+								</p>
+							)}
+							<div className="mt-4">
+								<Probe
+									control={control}
+									resetField={resetField}
+								/>
+							</div>
+						</div>
 
-										function mapOptions(
-											option: InsertOption,
-										) {
-											return option.value;
+						<div className="flex flex-col">
+							<p className="card-heading">Вставка:</p>
+
+							<Controller
+								name="inserts"
+								control={control}
+								render={({
+									field: { value, onBlur, onChange },
+								}) => {
+									const selectedValues: InsertOption[] = [];
+
+									value.forEach((v) => {
+										if (v in InsertsEnum) {
+											const foundOption =
+												productInsertOptions.find(
+													(option) =>
+														// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+														option.value === v,
+												);
+											if (foundOption)
+												return selectedValues.push(
+													foundOption,
+												);
 										}
 
-										return (
-											<InsertSelect
-												value={selectedValues}
-												onBlur={onBlur}
-												onChange={(option) =>
-													onChange(
-														option.map(mapOptions),
-													)
-												}
-											/>
-										);
-									}}
-								/>
+										return selectedValues.push({
+											value: v,
+											label: v,
+										});
+									});
 
-								{errors.inserts?.message && (
-									<p className="error-container ml-1 mt-2 text-sm">
-										{errors.inserts?.message}
-									</p>
-								)}
-							</div>
+									function mapOptions(option: InsertOption) {
+										return option.value;
+									}
+
+									return (
+										<InsertSelect
+											value={selectedValues}
+											onBlur={onBlur}
+											onChange={(option) =>
+												onChange(option.map(mapOptions))
+											}
+										/>
+									);
+								}}
+							/>
+
+							{errors.inserts?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.inserts?.message}
+								</p>
+							)}
 						</div>
 						<div className="flex flex-col">
-							<div className="card">
-								<p className="card-heading">
-									Количество камней:
-								</p>
-								<Controller
-									name="stones"
-									control={control}
-									render={({
-										field: { value, onBlur, onChange },
-									}) => {
-										const selected =
-											productNumOfStonesOptions.find(
-												(option) =>
-													option.value === value,
-											);
-										return (
-											<NumOfStonesSelect
-												value={selected}
-												onBlur={onBlur}
-												onChange={(option) =>
-													onChange(option?.value)
-												}
-											/>
+							<p className="card-heading">Количество камней:</p>
+							<Controller
+								name="stones"
+								control={control}
+								render={({
+									field: { value, onBlur, onChange },
+								}) => {
+									const selected =
+										productNumOfStonesOptions.find(
+											(option) => option.value === value,
 										);
-									}}
-								/>
-								{errors.stones?.message && (
-									<p className="error-container ml-1 mt-2 text-sm">
-										{errors.stones?.message}
-									</p>
-								)}
-							</div>
+									return (
+										<NumOfStonesSelect
+											value={selected}
+											onBlur={onBlur}
+											onChange={(option) =>
+												onChange(option?.value)
+											}
+										/>
+									);
+								}}
+							/>
+							{errors.stones?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.stones?.message}
+								</p>
+							)}
 						</div>
 						<h3 className="mt-4 text-xl font-semibold text-dark/90">
 							Подробности
 						</h3>
-						<div className="flex flex-col">
-							<div className="card flex-grow">
-								<div className="card-heading">Описание:</div>
-								<textarea
-									className="input-base flex h-full w-full flex-grow resize-none"
-									cols={40}
-									rows={6}
-									placeholder="Описание товара"
-									{...register("description")}
-								/>
-								{errors.description?.message && (
-									<div className="error-container ml-1 mt-2 text-sm">
-										{errors.description?.message}
-									</div>
-								)}
-							</div>
+						<div className="flex flex-grow flex-col">
+							<div className="card-heading">Описание:</div>
+							<textarea
+								className="input-base flex h-full w-full flex-grow resize-none"
+								cols={40}
+								rows={6}
+								placeholder="Описание товара"
+								{...register("description")}
+							/>
+							{errors.description?.message && (
+								<div className="error-container ml-1 mt-2 text-sm">
+									{errors.description?.message}
+								</div>
+							)}
 						</div>
 
 						<div className="card flex-row gap-4">
+							<div className="flex-grow">
+								<div className="card-heading">Артикул:</div>
+
+								<input
+									className="input-base w-full"
+									placeholder="Артикул"
+									{...register("sku")}
+								/>
+								{errors.sku?.message && (
+									<p className="error-container ml-1 mt-2 text-sm">
+										{errors.sku?.message}
+									</p>
+								)}
+
+								{errors.oldPrice?.message && (
+									<div className="error-container ml-1 mt-2 text-sm">
+										{errors.oldPrice?.message}
+									</div>
+								)}
+							</div>
+
 							<div className="flex-grow">
 								<div className="card-heading">Цена:</div>
 								<Controller
@@ -433,7 +425,7 @@ const CreateProductPage = () => {
 						<div className="flex">
 							<button
 								type="submit"
-								className="button-sm bg-[#F5F6FA]"
+								className="button-sm border-none bg-[#F2F1F0]"
 							>
 								Создать
 							</button>

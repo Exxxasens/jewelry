@@ -169,8 +169,8 @@ const Uploader: React.FC<UploaderProps> = ({
 	const isUploading = !!uploadingList.find((item) => item.loading);
 
 	return (
-		<div className="flex flex-grow flex-col gap-4 rounded-md">
-			<div className="flex flex-col items-start rounded-lg bg-[#F5F6FA] p-6">
+		<div className="mt-8 flex flex-grow flex-col gap-4 rounded-md">
+			<div className="flex w-fit flex-col items-start rounded-lg bg-[#F2F1F0] p-6">
 				<h2 className="m-0 text-xl font-semibold">Загрузка медиа</h2>
 				<p className="mt-2 text-base text-dark/80">
 					Добавьте несколько изображений PNG, JPEG
@@ -192,7 +192,7 @@ const Uploader: React.FC<UploaderProps> = ({
 				</label>
 			</div>
 
-			<div className="flex flex-col rounded-lg bg-[#F5F6FA] p-4">
+			<div className="flex flex-col rounded-lg bg-[#F2F1F0] p-4">
 				<div className="card-heading">Медиа:</div>
 				{uploadingList.length > 0 && (
 					<div className="grid w-full grid-cols-upload-layout grid-rows-upload-layout gap-2 rounded-lg bg-white p-4">
@@ -211,7 +211,7 @@ const Uploader: React.FC<UploaderProps> = ({
 											alt={item.filename}
 										/>
 										<button
-											className="absolute right-2 top-2 rounded-full border border-solid border-dark/10 bg-[#F5F6FA] p-0.5 hover:text-[tomato]"
+											className="absolute right-2 top-2 rounded-full border border-solid border-dark/10 bg-[#F2F1F0] p-0.5 hover:text-[tomato]"
 											type="button"
 											onClick={() =>
 												item.filename &&

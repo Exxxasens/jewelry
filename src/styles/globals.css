@@ -29,19 +29,19 @@
 		@apply mb-8 w-full text-3xl font-bold text-dark/90;
 	}
 	.button-group {
-		@apply flex w-fit flex-row gap-2 rounded-md bg-[#F5F6FA] p-3;
+		@apply flex w-fit flex-row gap-2 rounded-md bg-[#F2F1F0] p-3;
 	}
 	.button-sm {
 		@apply flex cursor-pointer flex-row items-center justify-center rounded-md border border-solid border-dark/10 bg-[transparent] bg-none px-3 py-2 text-sm font-semibold text-dark/90 outline-none hover:bg-dark hover:text-white;
 	}
 	.card {
-		@apply flex flex-col rounded-md bg-[#F5F6FA] p-4;
+		@apply flex flex-col;
 	}
 	.card-heading {
 		@apply mb-2 text-base font-medium text-dark/80;
 	}
 	.input-base {
-		@apply rounded-md border border-solid border-dark/10 bg-white px-3 py-3 text-base font-medium text-dark outline-none placeholder:text-[#999999] hover:border-[#999999];
+		@apply rounded-md bg-[#F2F1F0] px-3 py-3 text-base font-medium text-dark outline-none placeholder:text-[#999999] hover:border-[#999999];
 	}
 	.error-container {
 		@apply flex flex-row text-[tomato];
