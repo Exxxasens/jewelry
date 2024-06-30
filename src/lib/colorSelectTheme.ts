@@ -39,7 +39,7 @@ const colorSelectTheme = {
 	classNames: {
 		...selectTheme.classNames,
 		control: ({ isFocused }) =>
-			`!shadow-none ${isFocused ? "!border-[#999999]" : ""}`,
+			`!shadow-none ${isFocused ? "!border-[#999999]" : "!border-dark/10"}`,
 		singleValue: ({ data }) =>
 			`!text-dark/80 font-medium !py-0 ${dot(data.style)}`,
 		valueContainer: ({ isMulti }) => `${isMulti ? "!p-2.5" : "!p-3"}`,

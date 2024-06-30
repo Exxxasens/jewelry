@@ -5,6 +5,7 @@ import { db } from "~/server/db";
 import mime from "mime";
 import { env } from "~/env";
 import path from "node:path";
+import getMediaType from "~/lib/getMediaType";
 
 export async function uploadFile(formData: FormData) {
 	const allowedFileTypes = [
@@ -14,6 +15,14 @@ export async function uploadFile(formData: FormData) {
 		"video/mp4",
 	];
 	const file = formData.get("file") as File;
+
+	if (!allowedFileTypes.includes(file.type)) {
+		return {
+			error: "File type not allowed",
+		};
+	}
+
+	const type = getMediaType(file.type);
 	const originalFilename = formData.get("filename")?.toString();
 
 	if (!originalFilename) {
@@ -22,11 +31,6 @@ export async function uploadFile(formData: FormData) {
 
 	const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
 
-	if (!allowedFileTypes.includes(file.type)) {
-		return {
-			error: "File type not allowed",
-		};
-	}
 	const ext = mime.getExtension(file.type);
 	const filename = `${uniqueSuffix}.${ext ?? "unknown"}`;
 
@@ -38,6 +42,7 @@ export async function uploadFile(formData: FormData) {
 				originalFilename: originalFilename,
 				mimetype: file.type,
 				size: file.size,
+				type,
 			},
 		});
 

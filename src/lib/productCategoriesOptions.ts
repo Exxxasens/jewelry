@@ -1,5 +1,10 @@
 import { ProductCategory } from "@prisma/client";
 
+export interface CategoriesOption {
+	value: ProductCategory;
+	label: string;
+}
+
 const productCategoriesOptions = [
 	{ value: ProductCategory.Rings, label: "Кольца и перстни" },
 	{ value: ProductCategory.Earrings, label: "Серьги" },
@@ -13,6 +18,6 @@ const productCategoriesOptions = [
 	{ value: ProductCategory.CompleteSet, label: "Комплекты" },
 	{ value: ProductCategory.Religious, label: "Религиозные изделия" },
 	{ value: ProductCategory.Other, label: "Другое" },
-];
+] satisfies CategoriesOption[];
 
 export default productCategoriesOptions;

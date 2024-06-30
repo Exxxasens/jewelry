@@ -8,32 +8,30 @@ import Loading from "../Loading";
 import getMediaURL from "~/utils/getImageURL";
 import { uploadFile } from "~/app/actions/actions";
 import VideoPreview from "./VideoPreview";
-import { PiTrash, PiX } from "react-icons/pi";
-
-type FileType = "video" | "image";
+import { PiX } from "react-icons/pi";
+import getMediaType from "~/lib/getMediaType";
+import { type MediaType } from "@prisma/client";
 
 interface UploadingFile {
-	url: string | null;
+	filename: string | null;
 	loading: boolean;
 	file: File;
 	size?: number;
 	order: number;
-	type: FileType;
+	type?: MediaType;
 }
 
 type UploadedFile = Omit<UploadingFile, "file">;
+type UploadingEndData = {
+	filename: string;
+	size: number;
+	type: MediaType;
+};
 
 export interface UploaderProps {
 	allowUpload?: boolean;
 	limit?: number;
 	onChange?: (value: UploadedFile[]) => void;
-}
-
-function getType(type: string): FileType {
-	if (type.includes("video")) {
-		return "video";
-	}
-	return "image";
 }
 
 const Uploader: React.FC<UploaderProps> = ({
@@ -62,9 +60,8 @@ const Uploader: React.FC<UploaderProps> = ({
 			const mappedFiles: UploadingFile[] = fileArray.map((item, i) => ({
 				file: item,
 				loading: false,
-				url: null,
+				filename: null,
 				order: i,
-				type: getType(item.type),
 			}));
 			return [...state, ...mappedFiles];
 		});
@@ -86,14 +83,15 @@ const Uploader: React.FC<UploaderProps> = ({
 	}, []);
 
 	const onUploadingEnd = useCallback(
-		(file: File, { url, size }: { url: string; size: number }) => {
+		(file: File, { filename, size, type }: UploadingEndData) => {
 			setUploadingList(
 				produce((draft) => {
 					draft.forEach((draftItem) => {
 						if (draftItem.file === file) {
 							draftItem.loading = false;
-							draftItem.url = url;
+							draftItem.filename = filename;
 							draftItem.size = size;
+							draftItem.type = type;
 						}
 					});
 				}),
@@ -111,18 +109,18 @@ const Uploader: React.FC<UploaderProps> = ({
 		);
 	}, []);
 
-	const onRemove = useCallback((url: string) => {
+	const onRemove = useCallback((filename: string) => {
 		setUploadingList(
 			produce((draft) => {
-				draft = draft.filter((item) => item.url !== url);
+				draft = draft.filter((item) => item.filename !== filename);
 				return draft;
 			}),
 		);
 	}, []);
 
 	useEffect(() => {
-		uploadingList.forEach(({ file, loading, url }) => {
-			if (!url && !loading) {
+		uploadingList.forEach(({ file, loading, filename }) => {
+			if (!filename && !loading) {
 				onUploadingStart(file);
 
 				const formData = new FormData();
@@ -138,8 +136,9 @@ const Uploader: React.FC<UploaderProps> = ({
 							return onUploadingError(file);
 						}
 						return onUploadingEnd(file, {
-							url: data.result.filename,
+							filename: data.result.filename,
 							size: data.result.size,
+							type: data.result.type,
 						});
 					})
 					.catch(() => {
@@ -157,10 +156,10 @@ const Uploader: React.FC<UploaderProps> = ({
 		onChange(
 			uploadingList.map((state, i) => ({
 				loading: state.loading,
-				url: state.url,
+				filename: state.filename,
 				size: state.size,
 				order: i,
-				type: getType(state.file.type),
+				type: getMediaType(state.file.type),
 			})),
 		);
 
@@ -194,48 +193,50 @@ const Uploader: React.FC<UploaderProps> = ({
 			</div>
 
 			<div className="flex flex-col rounded-lg bg-[#F5F6FA] p-4">
-				<div className="card-heading">медиа:</div>
+				<div className="card-heading">Медиа:</div>
 				{uploadingList.length > 0 && (
-					<div className="grid-cols-upload-layout grid w-full gap-2 rounded-lg bg-white p-4">
+					<div className="grid w-full grid-cols-upload-layout grid-rows-upload-layout gap-2 rounded-lg bg-white p-4">
 						{uploadingList.map((item, index) => {
 							if (item.loading) {
 								return <UploadingFile key={index} />;
 							}
-							if (item.type === "image" && item.url)
+							if (item.type === "Image" && item.filename)
 								return (
 									<div
 										className="relative flex flex-col"
-										key={item.url}
+										key={item.filename}
 									>
 										<ImagePreview
-											src={getMediaURL(item.url)}
-											alt={item.url}
+											src={getMediaURL(item.filename)}
+											alt={item.filename}
 										/>
 										<button
 											className="absolute right-2 top-2 rounded-full border border-solid border-dark/10 bg-[#F5F6FA] p-0.5 hover:text-[tomato]"
 											type="button"
 											onClick={() =>
-												item.url && onRemove(item.url)
+												item.filename &&
+												onRemove(item.filename)
 											}
 										>
 											<PiX className="text-base" />
 										</button>
 									</div>
 								);
-							if (item.type === "video" && item.url) {
+							if (item.type === "Video" && item.filename) {
 								return (
 									<div
 										className="relative flex flex-col"
-										key={item.url}
+										key={item.filename}
 									>
 										<VideoPreview
-											src={getMediaURL(item.url)}
+											src={getMediaURL(item.filename)}
 										/>
 										<button
 											className="absolute right-2 top-2 rounded-full border border-solid border-dark/10 bg-[#F5F6FA] p-0.5 hover:text-[tomato]"
 											type="button"
 											onClick={() =>
-												item.url && onRemove(item.url)
+												item.filename &&
+												onRemove(item.filename)
 											}
 										>
 											<PiX className="text-base" />

@@ -108,23 +108,6 @@ enum Material {
   Other
 }
 
-// Вставка
-enum Inserts {
-  Diamond
-  Fianit
-  Sapphire
-  Emerald
-  Pearl
-  Topaz
-  Amethyst
-  Amber
-  Ruby
-  Alexandrite
-  Garnet
-  Other
-  Without
-}
-
 enum NumberOfStones {
   One
   Two
@@ -137,28 +120,37 @@ enum NumberOfStones {
 }
 
 model Brand {
-  id      String    @id @default(cuid())
-  name    String
-  Product Product[]
+  name     String    @id
+  products Product[]
 }
 
 model Product {
   id           String          @id @default(cuid())
   sku          String
   name         String
-  description  String
+  description  String?
+  brandName    String
+  probe        String?
+  price        Float
+  oldPrice     Float?
+  weight       Float?
+  size         String?
   category     ProductCategory
-  brand        Brand           @relation(fields: [brandId], references: [id])
+  brand        Brand           @relation(fields: [brandName], references: [name])
   color        Color
   material     Material
   inserts      Inserts[]
   stones       NumberOfStones
-  brandId      String
-  ProductMedia ProductMedia[]
+  productMedia ProductMedia[]
+}
+
+enum MediaType {
+  Video
+  Image
 }
 
 model ProductMedia {
-  id        String @id @default(cuid())
+  id        String    @id @default(cuid())
   order     Int
   productId String
   filename  String
@@ -173,6 +165,13 @@ model Media {
   filepath         String
   originalFilename String?
   mimetype         String?
+  type      MediaType
   size             Int
   productMedia     ProductMedia[]
+}
+
+model Inserts {
+  id       String    @id @default(cuid())
+  type     String    @unique
+  Products Product[]
 }

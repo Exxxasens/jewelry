@@ -1,11 +1,12 @@
 import {
 	Color,
-	Inserts,
 	Material,
+	MediaType,
 	NumberOfStones,
 	ProductCategory,
 } from "@prisma/client";
 import zod from "zod";
+import InsertsEnum from "../avito/insertsEnum";
 
 const productSchema = zod.object({
 	sku: zod.string().min(1, "Артикул обязателен для заполнения"),
@@ -17,24 +18,25 @@ const productSchema = zod.object({
 	brand: zod.string(),
 	color: zod.nativeEnum(Color),
 	material: zod.nativeEnum(Material),
-	inserts: zod.array(zod.nativeEnum(Inserts)),
+	probe: zod.string(),
+	inserts: zod.array(zod.nativeEnum(InsertsEnum).or(zod.string())),
 	stones: zod.nativeEnum(NumberOfStones),
 	//
 
 	media: zod.array(
 		zod.object({
 			order: zod.number(),
-			isLoading: zod.boolean(),
-			filename: zod.string().nullable(),
-			type: zod.enum(["photo", "video"]),
+			loading: zod.boolean(),
+			filename: zod.string(),
+			type: zod.nativeEnum(MediaType),
 			size: zod.number().optional(),
 		}),
 	), // any images
 
 	price: zod.number(),
 	oldPrice: zod.number(),
-	weight: zod.number(),
-	size: zod.string(),
+	weight: zod.number().optional(),
+	size: zod.string().optional(),
 });
 
 export type ProductSchema = zod.infer<typeof productSchema>;

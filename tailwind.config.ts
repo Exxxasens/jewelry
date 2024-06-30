@@ -6,7 +6,10 @@ export default {
 	theme: {
 		extend: {
 			gridTemplateColumns: {
-				"upload-layout": "repeat(auto-fill, minmax(196px, 1fr))",
+				"upload-layout": "repeat(auto-fill, minmax(128px, 196px))",
+			},
+			gridTemplateRows: {
+				"upload-layout": "repeat(auto-fill, minmax(128px, 196px))",
 			},
 			fontFamily: {
 				sans: ["var(--font-geist-sans)", ...fontFamily.sans],

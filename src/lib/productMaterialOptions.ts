@@ -1,5 +1,10 @@
 import { Material } from "@prisma/client";
 
+export interface MaterialOption {
+	value: Material;
+	label: string;
+}
+
 const productMaterialOptions = [
 	{ value: Material.Gold, label: "Золото" },
 	{ value: Material.Silver, label: "Серебро" },
@@ -9,6 +14,6 @@ const productMaterialOptions = [
 	{ value: Material.Leather, label: "Кожа" },
 	{ value: Material.PlatinumMetals, label: "Платиновые материалы" },
 	{ value: Material.Other, label: "Другое" },
-];
+] satisfies MaterialOption[];
 
 export default productMaterialOptions;

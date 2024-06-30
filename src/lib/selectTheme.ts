@@ -23,7 +23,7 @@ const theme = {
 	classNames: {
 		container: () => "rounded-md text-base font-medium",
 		control: ({ isFocused }) =>
-			`!shadow-none ${isFocused ? "!border-[#999999]" : ""}`,
+			`!shadow-none ${isFocused ? "!border-[#999999]" : "!border-dark/10"}`,
 		menu: () => "text-dark/80 p-2",
 		option: () => `cursor-pointer mt-1 rounded-md !text-sm !font-medium`,
 		valueContainer: ({ isMulti }) => `${isMulti ? "!p-2.5" : "!p-3"}`,
@@ -31,6 +31,7 @@ const theme = {
 		input: ({ isMulti }) =>
 			`!text-dark/80 !m-0 ${isMulti ? "!p-0.5" : "!p-0"}`,
 		multiValue: () => "text-base !bg-dark/10 !m-0 !mr-1.5",
+		placeholder: () => "!text-[#999999]",
 	},
 } satisfies SelectTheme;
 

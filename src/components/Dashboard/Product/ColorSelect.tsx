@@ -1,8 +1,15 @@
-import Select from "react-select";
+import Select, {
+	type GroupBase,
+	type Props as SelectProps,
+} from "react-select";
 import colorSelectTheme from "~/lib/colorSelectTheme";
-import productColorOptions from "~/lib/productColorOptions";
+import productColorOptions, {
+	type ColorOption,
+} from "~/lib/productColorOptions";
 
-const ColorSelect = () => {
+type ColorSelectProps = SelectProps<ColorOption, false, GroupBase<ColorOption>>;
+
+const ColorSelect: React.FC<ColorSelectProps> = (props) => {
 	return (
 		<Select
 			isMulti={false}
@@ -11,6 +18,7 @@ const ColorSelect = () => {
 			isSearchable={true}
 			options={productColorOptions}
 			{...colorSelectTheme}
+			{...props}
 		/>
 	);
 };

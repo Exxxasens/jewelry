@@ -1,8 +1,19 @@
-import Select from "react-select";
-import productMaterialOptions from "~/lib/productMaterialOptions";
-import selectTheme from "~/lib/selectTheme";
+import Select, {
+	type GroupBase,
+	type Props as SelectProps,
+} from "react-select";
+import productMaterialOptions, {
+	type MaterialOption,
+} from "~/lib/productMaterialOptions";
+import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
 
-const MaterialSelect = () => {
+type MaterialSelectProps = SelectProps<
+	MaterialOption,
+	false,
+	GroupBase<MaterialOption>
+>;
+
+const MaterialSelect: React.FC<MaterialSelectProps> = (props) => {
 	return (
 		<Select
 			isMulti={false}
@@ -10,7 +21,8 @@ const MaterialSelect = () => {
 			placeholder="Цвет"
 			isSearchable={true}
 			options={productMaterialOptions}
-			{...selectTheme}
+			{...(selectTheme as SelectTheme<MaterialOption>)}
+			{...props}
 		/>
 	);
 };

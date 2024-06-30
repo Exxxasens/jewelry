@@ -38,10 +38,13 @@
 		@apply flex flex-col rounded-md bg-[#F5F6FA] p-4;
 	}
 	.card-heading {
-		@apply mb-2 text-sm font-medium uppercase tracking-wider text-dark/80;
+		@apply mb-2 text-base font-medium text-dark/80;
 	}
 	.input-base {
 		@apply rounded-md border border-solid border-dark/10 bg-white px-3 py-3 text-base font-medium text-dark outline-none placeholder:text-[#999999] hover:border-[#999999];
+	}
+	.error-container {
+		@apply flex flex-row text-[tomato];
 	}
 }
 

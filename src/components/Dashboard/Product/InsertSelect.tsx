@@ -1,16 +1,28 @@
-import Select from "react-select";
-import productInsertOptions from "~/lib/productInsertOptions";
-import selectTheme from "~/lib/selectTheme";
+import { type GroupBase } from "react-select";
+import AsyncCreatableSelect, {
+	type AsyncCreatableProps,
+} from "react-select/async-creatable";
+import productInsertOptions, {
+	type InsertOption,
+} from "~/lib/productInsertOptions";
+import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
 
-const InsertSelect = () => {
+type InsertSelectProps = AsyncCreatableProps<
+	InsertOption,
+	true,
+	GroupBase<InsertOption>
+>;
+
+const InsertSelect: React.FC<InsertSelectProps> = (props) => {
 	return (
-		<Select
+		<AsyncCreatableSelect
+			isSearchable={true}
 			isMulti={true}
 			isClearable={true}
 			placeholder="Вставка"
-			isSearchable={true}
-			options={productInsertOptions}
-			{...selectTheme}
+			defaultOptions={productInsertOptions}
+			{...(selectTheme as SelectTheme<InsertOption>)}
+			{...props}
 		/>
 	);
 };

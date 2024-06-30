@@ -1,8 +1,20 @@
-import CreatableSelect from "react-select/creatable";
-import selectTheme from "~/lib/selectTheme";
+import { type GroupBase } from "react-select";
+import CreatableSelect, { type CreatableProps } from "react-select/creatable";
+import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
 import { api } from "~/trpc/react";
 
-const CreatableBrandSelect = () => {
+interface BrandSelectOption {
+	label: string;
+	value: string;
+}
+
+type CreatableBrandSelectProps = CreatableProps<
+	BrandSelectOption,
+	false,
+	GroupBase<BrandSelectOption>
+>;
+
+const CreatableBrandSelect: React.FC<CreatableBrandSelectProps> = (props) => {
 	const { isLoading, data } = api.brand.fetchBrands.useQuery();
 
 	function transformData() {
@@ -20,7 +32,7 @@ const CreatableBrandSelect = () => {
 
 	return (
 		<CreatableSelect
-			{...selectTheme}
+			{...(selectTheme as SelectTheme<BrandSelectOption>)}
 			isMulti={false}
 			isClearable={true}
 			placeholder="Название бренда"
@@ -33,6 +45,7 @@ const CreatableBrandSelect = () => {
 			)}
 			options={transformData()}
 			formatCreateLabel={(creatable) => `Создать "${creatable}"`}
+			{...props}
 		/>
 	);
 };

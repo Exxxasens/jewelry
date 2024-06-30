@@ -1,8 +1,19 @@
-import productNumOfStonesOptions from "~/lib/productNumOfStonesOptions";
-import selectTheme from "~/lib/selectTheme";
-import Select from "react-select";
+import productNumOfStonesOptions, {
+	type NumOfStonesOption,
+} from "~/lib/productNumOfStonesOptions";
+import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
+import Select, {
+	type GroupBase,
+	type Props as SelectProps,
+} from "react-select";
 
-const NumOfStonesSelect = () => {
+type NumOfStonesSelectProps = SelectProps<
+	NumOfStonesOption,
+	false,
+	GroupBase<NumOfStonesOption>
+>;
+
+const NumOfStonesSelect: React.FC<NumOfStonesSelectProps> = (props) => {
 	return (
 		<Select
 			isMulti={false}
@@ -10,7 +21,8 @@ const NumOfStonesSelect = () => {
 			placeholder="Цвет"
 			isSearchable={true}
 			options={productNumOfStonesOptions}
-			{...selectTheme}
+			{...(selectTheme as SelectTheme<NumOfStonesOption>)}
+			{...props}
 		/>
 	);
 };
