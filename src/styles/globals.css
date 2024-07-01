@@ -41,7 +41,7 @@
 		@apply mb-2 text-base font-medium text-dark/80;
 	}
 	.input-base {
-		@apply rounded-md bg-[#F2F1F0] px-3 py-3 text-base font-medium text-dark outline-none placeholder:text-[#999999] hover:border-[#999999];
+		@apply rounded-md border border-solid border-[transparent] bg-[#F2F1F0] px-3 py-3 text-base font-medium text-dark outline-none placeholder:text-[#999999] hover:border-[#999999] hover:border-dark/10;
 	}
 	.error-container {
 		@apply flex flex-row text-[tomato];

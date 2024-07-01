@@ -129,18 +129,18 @@ model Product {
   sku          String
   name         String
   description  String?
-  brandName    String
+  brandName    String?
   probe        String?
   price        Float
   oldPrice     Float?
   weight       Float?
   size         String?
   category     ProductCategory
-  brand        Brand           @relation(fields: [brandName], references: [name])
-  color        Color
-  material     Material
+  brand        Brand?           @relation(fields: [brandName], references: [name])
+  color        Color?
+  material     Material?
   inserts      Inserts[]
-  stones       NumberOfStones
+  stones       NumberOfStones?
   productMedia ProductMedia[]
 }
 

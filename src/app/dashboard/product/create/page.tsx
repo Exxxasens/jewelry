@@ -332,12 +332,6 @@ const CreateProductPage = () => {
 										{errors.sku?.message}
 									</p>
 								)}
-
-								{errors.oldPrice?.message && (
-									<div className="error-container ml-1 mt-2 text-sm">
-										{errors.oldPrice?.message}
-									</div>
-								)}
 							</div>
 
 							<div className="flex-grow">
