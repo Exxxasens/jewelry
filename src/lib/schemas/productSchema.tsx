@@ -37,14 +37,20 @@ const productSchema = zod
 		), // any images
 
 		price: zod.number().min(0, "Цена не может быть меньше 0"),
-		oldPrice: zod.number().min(0, "Цена до скидки не может быть меньше 0"),
+		oldPrice: zod
+			.number()
+			.min(0, "Цена до скидки не может быть меньше 0")
+			.optional(),
 		weight: zod.number().optional(),
 		size: zod.string().optional(),
 	})
-	.refine((schema) => schema.oldPrice > schema.price, {
-		message: "Цена до скидки не может быть меньше",
-		path: ["oldPrice"],
-	});
+	.refine(
+		(schema) => (schema.oldPrice ? schema.oldPrice > schema.price : true),
+		{
+			message: "Цена до скидки не может быть меньше",
+			path: ["oldPrice"],
+		},
+	);
 
 export type ProductSchema = zod.infer<typeof productSchema>;
 

@@ -46,6 +46,9 @@
 	.error-container {
 		@apply flex flex-row text-[tomato];
 	}
+	.label-required {
+		@apply after:ml-1 after:text-sm after:text-dark/80 after:content-["(обязательное_поле)"];
+	}
 }
 
 @layer utilities {

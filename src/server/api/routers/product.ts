@@ -27,9 +27,9 @@ export const productRouter = createTRPCRouter({
 								},
 							},
 						}
-					: null,
-				color: input.color ?? null,
-				material: input.material ?? null,
+					: undefined,
+				color: input.color,
+				material: input.material,
 				probe: input.probe,
 				inserts: {
 					connectOrCreate: input.inserts.map((insert) => ({
@@ -41,7 +41,7 @@ export const productRouter = createTRPCRouter({
 						},
 					})),
 				},
-				stones: input.stones ?? null,
+				stones: input.stones,
 				price: input.price,
 				oldPrice: input.oldPrice,
 				weight: input.weight,

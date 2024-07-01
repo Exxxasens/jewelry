@@ -66,7 +66,9 @@ const CreateProductPage = () => {
 				>
 					<div className="flex w-full max-w-screen-lg flex-col gap-4">
 						<div className="flex flex-col">
-							<p className="card-heading">Наименование:</p>
+							<p className="card-heading label-required">
+								Наименование:
+							</p>
 							<input
 								className="input-base"
 								placeholder="Наименование товара"
@@ -79,7 +81,9 @@ const CreateProductPage = () => {
 							)}
 						</div>
 						<div className="flex flex-col">
-							<p className="card-heading">Категория:</p>
+							<p className="card-heading label-required">
+								Категория:
+							</p>
 							<Controller
 								name="category"
 								control={control}
@@ -218,7 +222,7 @@ const CreateProductPage = () => {
 						</div>
 
 						<div className="flex flex-col">
-							<p className="card-heading">Вставка:</p>
+							<div className="card-heading">Вставка:</div>
 
 							<Controller
 								name="inserts"
@@ -303,7 +307,9 @@ const CreateProductPage = () => {
 							Подробности
 						</h3>
 						<div className="flex flex-grow flex-col">
-							<div className="card-heading">Описание:</div>
+							<div className="card-heading label-required">
+								Описание:
+							</div>
 							<textarea
 								className="input-base flex h-full w-full flex-grow resize-none"
 								cols={40}
@@ -320,7 +326,9 @@ const CreateProductPage = () => {
 
 						<div className="card flex-row gap-4">
 							<div className="flex-grow">
-								<div className="card-heading">Артикул:</div>
+								<div className="card-heading label-required">
+									Артикул:
+								</div>
 
 								<input
 									className="input-base w-full"
@@ -335,7 +343,9 @@ const CreateProductPage = () => {
 							</div>
 
 							<div className="flex-grow">
-								<div className="card-heading">Цена:</div>
+								<div className="card-heading label-required">
+									Цена:
+								</div>
 								<Controller
 									name="price"
 									control={control}
