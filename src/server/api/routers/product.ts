@@ -1,3 +1,4 @@
+import { ProductStatus } from "@prisma/client";
 import { z } from "zod";
 import productSchema from "~/lib/schemas/productSchema";
 
@@ -54,7 +55,21 @@ export const productRouter = createTRPCRouter({
 						})),
 					},
 				},
+				status: ProductStatus.Published,
 			},
 		});
 	}),
+
+	get: publicProcedure
+		.input(z.object({ skip: z.number(), take: z.number() }))
+		.query(({ input }) => {
+			return db.product.findMany({
+				where: {},
+				include: {
+					productMedia: true,
+				},
+				skip: input.skip,
+				take: input.take,
+			});
+		}),
 });

@@ -22,6 +22,11 @@
 		background-color: #d3d4dd;
 		border-radius: 3px;
 	}
+
+	th {
+		font-size: inherit;
+		font-weight: inherit;
+	}
 }
 
 @layer components {
@@ -48,6 +53,12 @@
 	}
 	.label-required {
 		@apply after:ml-1 after:text-sm after:text-dark/80 after:content-["(обязательное_поле)"];
+	}
+	.tag {
+		@apply flex flex-row items-center justify-center rounded-lg border border-solid px-3 py-2 text-sm font-medium;
+	}
+	.button-base {
+		@apply flex items-center justify-center rounded-md border-none px-4 py-2 text-sm font-medium text-white/90 outline-none hover:cursor-pointer;
 	}
 }
 

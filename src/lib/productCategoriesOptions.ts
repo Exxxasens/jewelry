@@ -1,23 +1,30 @@
 import { ProductCategory } from "@prisma/client";
 
+export const categoriesMap: Record<ProductCategory, string> = {
+	[ProductCategory.Rings]: "Кольца и перстни",
+	[ProductCategory.Earrings]: "Серьги",
+	[ProductCategory.Pendants]: "Кулоны и подвески",
+	[ProductCategory.Bracelets]: "Браслеты",
+	[ProductCategory.Piercing]: "Пирсинг",
+	[ProductCategory.Chains]: "Цепи",
+	[ProductCategory.Necklace]: "Колье",
+	[ProductCategory.Charms]: "Шармы",
+	[ProductCategory.Brooches]: "Броши",
+	[ProductCategory.CompleteSet]: "Комплекты",
+	[ProductCategory.Religious]: "Религиозные изделия",
+	[ProductCategory.Other]: "Другое",
+};
+
 export interface CategoriesOption {
 	value: ProductCategory;
 	label: string;
 }
 
-const productCategoriesOptions = [
-	{ value: ProductCategory.Rings, label: "Кольца и перстни" },
-	{ value: ProductCategory.Earrings, label: "Серьги" },
-	{ value: ProductCategory.Pendants, label: "Кулоны и подвески" },
-	{ value: ProductCategory.Bracelets, label: "Браслеты" },
-	{ value: ProductCategory.Piercing, label: "Пирсинг" },
-	{ value: ProductCategory.Chains, label: "Цепи" },
-	{ value: ProductCategory.Necklace, label: "Колье" },
-	{ value: ProductCategory.Charms, label: "Шармы" },
-	{ value: ProductCategory.Brooches, label: "Броши" },
-	{ value: ProductCategory.CompleteSet, label: "Комплекты" },
-	{ value: ProductCategory.Religious, label: "Религиозные изделия" },
-	{ value: ProductCategory.Other, label: "Другое" },
-] satisfies CategoriesOption[];
+const productCategoriesOptions: CategoriesOption[] = Object.entries(
+	categoriesMap,
+).map(([value, label]) => ({
+	value: value as ProductCategory,
+	label: label,
+})) satisfies CategoriesOption[];
 
 export default productCategoriesOptions;

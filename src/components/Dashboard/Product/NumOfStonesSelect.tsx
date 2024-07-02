@@ -18,7 +18,7 @@ const NumOfStonesSelect: React.FC<NumOfStonesSelectProps> = (props) => {
 		<Select
 			isMulti={false}
 			isClearable={true}
-			placeholder="Цвет"
+			placeholder="Количество камней"
 			isSearchable={true}
 			options={productNumOfStonesOptions}
 			{...(selectTheme as SelectTheme<NumOfStonesOption>)}

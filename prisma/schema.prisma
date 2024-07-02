@@ -135,6 +135,7 @@ model Product {
   oldPrice     Float?
   weight       Float?
   size         String?
+  status        ProductStatus
   category     ProductCategory
   brand        Brand?           @relation(fields: [brandName], references: [name])
   color        Color?
@@ -174,4 +175,10 @@ model Inserts {
   id       String    @id @default(cuid())
   type     String    @unique
   Products Product[]
+}
+
+enum ProductStatus {
+  Hidden
+  // Draft
+  Published
 }

@@ -33,7 +33,7 @@ const CreateProductPage = () => {
 	const methods = useForm<ProductSchema>({
 		resolver,
 		defaultValues: {
-			sku: "test",
+			sku: "",
 			inserts: [],
 		},
 	});
@@ -57,7 +57,7 @@ const CreateProductPage = () => {
 	}
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col pb-8">
 			<h2 className="mb-8 text-2xl font-bold text-dark">Новый товар</h2>
 			<FormProvider {...methods}>
 				<form
@@ -187,38 +187,39 @@ const CreateProductPage = () => {
 						</div>
 						<div className="flex flex-col">
 							<p className="card-heading">Материал:</p>
-							<Controller
-								name="material"
-								control={control}
-								render={({
-									field: { value, onBlur, onChange },
-								}) => {
-									const selected =
-										productMaterialOptions.find(
-											(option) => option.value === value,
+							<div className="flex flex-col gap-4">
+								<Controller
+									name="material"
+									control={control}
+									render={({
+										field: { value, onBlur, onChange },
+									}) => {
+										const selected =
+											productMaterialOptions.find(
+												(option) =>
+													option.value === value,
+											);
+										return (
+											<MaterialSelect
+												value={selected}
+												onBlur={onBlur}
+												onChange={(option) =>
+													onChange(option?.value)
+												}
+											/>
 										);
-									return (
-										<MaterialSelect
-											value={selected}
-											onBlur={onBlur}
-											onChange={(option) =>
-												onChange(option?.value)
-											}
-										/>
-									);
-								}}
-							/>
-							{errors.color?.message && (
-								<p className="error-container ml-1 mt-2 text-sm">
-									{errors.color?.message}
-								</p>
-							)}
-							<div className="mt-4">
+									}}
+								/>
 								<Probe
 									control={control}
 									resetField={resetField}
 								/>
 							</div>
+							{errors.color?.message && (
+								<p className="error-container ml-1 mt-2 text-sm">
+									{errors.color?.message}
+								</p>
+							)}
 						</div>
 
 						<div className="flex flex-col">
@@ -311,7 +312,7 @@ const CreateProductPage = () => {
 								Описание:
 							</div>
 							<textarea
-								className="input-base flex h-full w-full flex-grow resize-none"
+								className="input-base flex h-full w-full flex-grow resize-none text-dark/80"
 								cols={40}
 								rows={6}
 								placeholder="Описание товара"
@@ -429,7 +430,7 @@ const CreateProductPage = () => {
 						<div className="flex">
 							<button
 								type="submit"
-								className="button-sm border-none bg-[#F2F1F0]"
+								className="button-base border-none bg-dark/90 text-white"
 							>
 								Создать
 							</button>
