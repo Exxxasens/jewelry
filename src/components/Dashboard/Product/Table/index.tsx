@@ -7,7 +7,8 @@ import getMediaURL from "~/utils/getImageURL";
 import CategoryTag from "../CategoryTag";
 import { type ProductCategory, type ProductStatus } from "@prisma/client";
 import Status from "../Status";
-import priceFormatter from "~/lib/priceFormatter";
+import { FiMoreHorizontal, FiPenTool, FiPlus, FiTrash } from "react-icons/fi";
+import { useContextMenuActions } from "~/components/ContextMenu/ContextMenuProvider";
 
 interface TableData {
 	image?: string;
@@ -25,11 +26,42 @@ const ProductTable = () => {
 		skip: 0,
 	});
 
+	const { setContextMenu, showContextMenu, setPosition } =
+		useContextMenuActions();
+	const priceFormatter = new Intl.NumberFormat("ru-RU", {
+		style: "currency",
+		currency: "RUB",
+	});
+
+	const contextMenuItems = [
+		{
+			title: "Копировать",
+			icon: <FiPlus />,
+		},
+		{
+			title: "Редактировать",
+			icon: <FiPenTool />,
+		},
+		{},
+		{
+			title: "Удалить",
+			className: "delete",
+			icon: <FiTrash />,
+		},
+	];
+
+	function openContextMenu(e: React.MouseEvent<HTMLButtonElement>) {
+		const { pageX, pageY } = e;
+		setContextMenu(contextMenuItems);
+		setPosition({ x: pageX, y: pageY });
+		showContextMenu();
+	}
+
 	const columns: TableColumns<TableData> = {
 		image: {
 			title: "Фото",
 			render: (image) => (
-				<div className="flex h-full items-center justify-center bg-dark/10 p-3">
+				<div className="flex h-full items-center justify-center bg-dark/5 p-3">
 					<Image
 						alt="img"
 						src={getMediaURL(image)}
@@ -45,7 +77,7 @@ const ProductTable = () => {
 		sku: {
 			title: "Артикул",
 			render: (sku) => (
-				<div className="flex h-full items-center justify-center bg-dark/10 p-3 font-semibold">
+				<div className="flex h-full items-center justify-center bg-dark/5 p-3 font-semibold">
 					{sku}
 				</div>
 			),
@@ -55,7 +87,7 @@ const ProductTable = () => {
 		name: {
 			title: "Наименование",
 			render: (name) => (
-				<div className="flex h-full items-center justify-center bg-dark/10 p-3 text-base">
+				<div className="flex h-full items-center justify-center bg-dark/5 p-3 text-base">
 					{name}
 				</div>
 			),
@@ -65,7 +97,7 @@ const ProductTable = () => {
 		category: {
 			title: "Категория",
 			render: (category) => (
-				<div className="flex h-full flex-wrap items-center justify-center gap-2 bg-dark/10 p-3">
+				<div className="flex h-full flex-wrap items-center justify-center gap-2 bg-dark/5 p-3">
 					<CategoryTag category={category} />
 				</div>
 			),
@@ -75,7 +107,7 @@ const ProductTable = () => {
 		status: {
 			title: "Статус",
 			render: (status) => (
-				<div className="flex h-full items-center justify-center bg-dark/10 p-3">
+				<div className="flex h-full items-center justify-center bg-dark/5 p-3">
 					<Status status={status} onClick={() => void null} />
 				</div>
 			),
@@ -85,7 +117,7 @@ const ProductTable = () => {
 		oldPrice: {
 			title: "Цена до скидки",
 			render: (oldPrice) => (
-				<div className="flex h-full items-center justify-center bg-dark/10 p-3">
+				<div className="flex h-full items-center justify-center bg-dark/5 p-3">
 					{oldPrice && priceFormatter.format(oldPrice)}
 				</div>
 			),
@@ -95,7 +127,7 @@ const ProductTable = () => {
 		price: {
 			title: "Цена",
 			render: (price) => (
-				<div className="flex h-full items-center justify-center bg-dark/10 p-3">
+				<div className="flex h-full items-center justify-center bg-dark/5 p-3">
 					{price && priceFormatter.format(price)}
 				</div>
 			),
@@ -130,7 +162,7 @@ const ProductTable = () => {
 					selection={(onChange, checked, heading) => (
 						<div
 							className={`flex h-full items-center justify-center ${
-								heading ? "" : "rounded-l-md bg-dark/10 p-3"
+								heading ? "" : "rounded-l-md bg-dark/5 p-3"
 							}`}
 						>
 							<input
@@ -141,6 +173,18 @@ const ProductTable = () => {
 							/>
 						</div>
 					)}
+					menu={() => (
+						<div className="flex h-full items-center justify-center rounded-r-md bg-dark/5 p-3">
+							<button
+								className="button-sm"
+								type="button"
+								onClick={openContextMenu}
+							>
+								<FiMoreHorizontal className="text-xl" />
+							</button>
+						</div>
+					)}
+					tdMenuClassNames="h-0 pt-3"
 				/>
 			)}
 

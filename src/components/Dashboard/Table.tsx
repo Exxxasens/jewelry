@@ -35,6 +35,9 @@ export interface RowProps<Data> {
 	selected: boolean;
 	toggleSelect: () => void;
 	tdSelectClassNames?: string;
+
+	menu?: () => JSX.Element;
+	tdMenuClassNames?: string;
 }
 
 const Row = <SourceData extends object>({
@@ -44,6 +47,8 @@ const Row = <SourceData extends object>({
 	selected,
 	toggleSelect,
 	tdSelectClassNames,
+	menu,
+	tdMenuClassNames,
 }: RowProps<SourceData>) => {
 	const keys = getKeys(columns);
 
@@ -74,6 +79,8 @@ const Row = <SourceData extends object>({
 					</td>
 				);
 			})}
+
+			{menu && <td className={tdMenuClassNames}>{menu()}</td>}
 		</tr>
 	);
 };
@@ -89,6 +96,9 @@ export interface TableProps<Data> {
 	) => JSX.Element;
 	thSelectClassNames?: string;
 	tdSelectClassNames?: string;
+
+	menu?: () => JSX.Element;
+	tdMenuClassNames?: string;
 }
 
 const Table = <SourceData extends object>({
@@ -98,6 +108,8 @@ const Table = <SourceData extends object>({
 	selection,
 	thSelectClassNames,
 	tdSelectClassNames,
+	menu,
+	tdMenuClassNames,
 }: TableProps<SourceData>) => {
 	const [isAllSelected, setIsAllSelected] = useState(false);
 	const [dataList, setDataList] = useState(dataSource);
@@ -185,6 +197,8 @@ const Table = <SourceData extends object>({
 						toggleSelect={() => toggleSelect(index)}
 						selected={data._selected ?? false}
 						tdSelectClassNames={tdSelectClassNames}
+						menu={menu}
+						tdMenuClassNames={tdMenuClassNames}
 					/>
 				))}
 			</tbody>
