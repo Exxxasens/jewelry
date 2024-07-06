@@ -29,7 +29,7 @@ const ProductTable = () => {
 		image: {
 			title: "Фото",
 			render: (image) => (
-				<div className="flex h-full items-center justify-center rounded-l-md bg-dark/10 p-3">
+				<div className="flex h-full items-center justify-center bg-dark/10 p-3">
 					<Image
 						alt="img"
 						src={getMediaURL(image)}
@@ -79,7 +79,7 @@ const ProductTable = () => {
 					<Status status={status} onClick={() => void null} />
 				</div>
 			),
-			tdClassNames: "h-0 max-w-lg pt-3 text-center",
+			tdClassNames: "h-0 pt-3 text-center",
 			thClassNames: "p-2",
 		},
 		oldPrice: {
@@ -89,7 +89,7 @@ const ProductTable = () => {
 					{oldPrice && priceFormatter.format(oldPrice)}
 				</div>
 			),
-			tdClassNames: "h-0 max-w-lg pt-3 text-center",
+			tdClassNames: "h-0 pt-3 text-center",
 			thClassNames: "p-2",
 		},
 		price: {
@@ -99,7 +99,7 @@ const ProductTable = () => {
 					{price && priceFormatter.format(price)}
 				</div>
 			),
-			tdClassNames: "h-0 max-w-lg pt-3 text-center",
+			tdClassNames: "h-0 pt-3 text-center",
 			thClassNames: "p-2",
 		},
 	};
@@ -118,8 +118,6 @@ const ProductTable = () => {
 		};
 	});
 
-	console.log(dataSource);
-
 	return (
 		<div className="flex flex-col">
 			{dataSource && (
@@ -127,6 +125,22 @@ const ProductTable = () => {
 					columns={columns}
 					dataSource={dataSource}
 					trClassNames="font-medium text-sm text-dark/80"
+					thSelectClassNames="p-2"
+					tdSelectClassNames="h-0 pt-3"
+					selection={(onChange, checked, heading) => (
+						<div
+							className={`flex h-full items-center justify-center ${
+								heading ? "" : "rounded-l-md bg-dark/10 p-3"
+							}`}
+						>
+							<input
+								type="checkbox"
+								checked={checked}
+								onChange={onChange}
+								className="h-4 w-4"
+							/>
+						</div>
+					)}
 				/>
 			)}
 
