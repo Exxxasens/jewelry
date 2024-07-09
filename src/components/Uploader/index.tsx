@@ -13,11 +13,11 @@ import getMediaType from "~/lib/getMediaType";
 import { type MediaType } from "@prisma/client";
 
 interface UploadingFile {
+	order: number;
 	filename: string | null;
 	loading: boolean;
-	file: File;
+	file?: File;
 	size?: number;
-	order: number;
 	type?: MediaType;
 }
 
@@ -31,6 +31,7 @@ type UploadingEndData = {
 export interface UploaderProps {
 	allowUpload?: boolean;
 	limit?: number;
+	defaultValue?: UploadedFile[];
 	onChange?: (value: UploadedFile[]) => void;
 }
 
@@ -38,8 +39,11 @@ const Uploader: React.FC<UploaderProps> = ({
 	allowUpload = true,
 	limit,
 	onChange,
+	defaultValue,
 }) => {
-	const [uploadingList, setUploadingList] = useState<UploadingFile[]>([]);
+	const [uploadingList, setUploadingList] = useState<UploadingFile[]>(
+		defaultValue ?? [],
+	);
 
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		const files = e.target.files;
@@ -120,7 +124,7 @@ const Uploader: React.FC<UploaderProps> = ({
 
 	useEffect(() => {
 		uploadingList.forEach(({ file, loading, filename }) => {
-			if (!filename && !loading) {
+			if (!filename && !loading && file) {
 				onUploadingStart(file);
 
 				const formData = new FormData();
@@ -152,15 +156,21 @@ const Uploader: React.FC<UploaderProps> = ({
 		if (!onChange) {
 			return;
 		}
-
 		onChange(
-			uploadingList.map((state, i) => ({
-				loading: state.loading,
-				filename: state.filename,
-				size: state.size,
-				order: i,
-				type: getMediaType(state.file.type),
-			})),
+			uploadingList.map((state, i) => {
+				const type = state.type
+					? state.type
+					: state.file
+						? getMediaType(state.file.type)
+						: undefined;
+				return {
+					loading: state.loading,
+					filename: state.filename,
+					size: state.size,
+					order: i,
+					type,
+				};
+			}),
 		);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

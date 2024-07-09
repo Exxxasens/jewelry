@@ -36,7 +36,7 @@ export interface RowProps<Data> {
 	toggleSelect: () => void;
 	tdSelectClassNames?: string;
 
-	menu?: () => JSX.Element;
+	menu?: (key: string) => JSX.Element;
 	tdMenuClassNames?: string;
 }
 
@@ -80,7 +80,7 @@ const Row = <SourceData extends object>({
 				);
 			})}
 
-			{menu && <td className={tdMenuClassNames}>{menu()}</td>}
+			{menu && <td className={tdMenuClassNames}>{menu(data.key)}</td>}
 		</tr>
 	);
 };
@@ -97,7 +97,7 @@ export interface TableProps<Data> {
 	thSelectClassNames?: string;
 	tdSelectClassNames?: string;
 
-	menu?: () => JSX.Element;
+	menu?: (key: string) => JSX.Element;
 	tdMenuClassNames?: string;
 }
 

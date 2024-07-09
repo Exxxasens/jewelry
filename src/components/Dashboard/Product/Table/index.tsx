@@ -8,7 +8,11 @@ import CategoryTag from "../CategoryTag";
 import { type ProductCategory, type ProductStatus } from "@prisma/client";
 import Status from "../Status";
 import { FiMoreHorizontal, FiPenTool, FiPlus, FiTrash } from "react-icons/fi";
-import { useContextMenuActions } from "~/components/ContextMenu/ContextMenuProvider";
+import {
+	type MenuItem,
+	useContextMenuActions,
+} from "~/components/ContextMenu/ContextMenuProvider";
+import { useRouter } from "next/navigation";
 
 interface TableData {
 	image?: string;
@@ -21,37 +25,47 @@ interface TableData {
 }
 
 const ProductTable = () => {
-	const { data: products } = api.product.get.useQuery({
+	const router = useRouter();
+	const { data: products } = api.product.getDashboardProductList.useQuery({
 		take: 10,
 		skip: 0,
 	});
 
-	const { setContextMenu, showContextMenu, setPosition } =
+	const { setContextMenu, showContextMenu, setPosition, hideContextMenu } =
 		useContextMenuActions();
 	const priceFormatter = new Intl.NumberFormat("ru-RU", {
 		style: "currency",
 		currency: "RUB",
 	});
 
-	const contextMenuItems = [
-		{
-			title: "Копировать",
-			icon: <FiPlus />,
-		},
-		{
-			title: "Редактировать",
-			icon: <FiPenTool />,
-		},
-		{},
-		{
-			title: "Удалить",
-			className: "delete",
-			icon: <FiTrash />,
-		},
-	];
-
-	function openContextMenu(e: React.MouseEvent<HTMLButtonElement>) {
+	function openContextMenu(
+		e: React.MouseEvent<HTMLButtonElement>,
+		id: string,
+	) {
 		const { pageX, pageY } = e;
+		const contextMenuItems: MenuItem[] = [
+			{
+				title: "Копировать",
+				icon: <FiPlus />,
+				handler() {
+					console.log("copy");
+				},
+			},
+			{
+				title: "Редактировать",
+				icon: <FiPenTool />,
+				handler() {
+					router.push(`/dashboard/product/${id}/edit`);
+					hideContextMenu();
+				},
+			},
+			{},
+			{
+				title: "Удалить",
+				className: "delete",
+				icon: <FiTrash />,
+			},
+		];
 		setContextMenu(contextMenuItems);
 		setPosition({ x: pageX, y: pageY });
 		showContextMenu();
@@ -173,12 +187,12 @@ const ProductTable = () => {
 							/>
 						</div>
 					)}
-					menu={() => (
+					menu={(key) => (
 						<div className="flex h-full items-center justify-center rounded-r-md bg-dark/5 p-3">
 							<button
 								className="button-sm"
 								type="button"
-								onClick={openContextMenu}
+								onClick={(e) => openContextMenu(e, key)}
 							>
 								<FiMoreHorizontal className="text-xl" />
 							</button>

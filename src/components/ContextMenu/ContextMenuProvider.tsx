@@ -7,7 +7,7 @@ import React, {
 	type PropsWithChildren,
 } from "react";
 
-export interface IMenuItem {
+export interface MenuItem {
 	title?: string;
 	icon?: React.ReactNode;
 	className?: string;
@@ -20,13 +20,13 @@ export interface MenuPosition {
 }
 
 export interface ContextMenuState {
-	content: IMenuItem[];
+	content: MenuItem[];
 	position: MenuPosition;
 	show: boolean;
 }
 
 export interface ContextMenuActions {
-	setContextMenu: (content: IMenuItem[]) => void;
+	setContextMenu: (content: MenuItem[]) => void;
 	showContextMenu: () => void;
 	hideContextMenu: () => void;
 	setPosition: (position: MenuPosition) => void;
@@ -53,7 +53,7 @@ export const ContextMenuProvider: React.FC<PropsWithChildren> = ({
 }) => {
 	const [state, setState] = useState<ContextMenuState>(initialState);
 
-	const setContextMenu = (content: IMenuItem[]) => {
+	const setContextMenu = (content: MenuItem[]) => {
 		setState((prevState) => ({ ...prevState, content }));
 	};
 

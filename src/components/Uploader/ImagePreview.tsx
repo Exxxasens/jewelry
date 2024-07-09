@@ -8,7 +8,7 @@ interface ImagePreviewProps {
 const ImagePreview: React.FC<ImagePreviewProps> = ({ src, alt }) => {
 	return (
 		<Image
-			className="h-full w-full rounded-lg object-contain"
+			className="h-full w-full rounded-lg object-cover"
 			width={256}
 			height={256}
 			src={src}

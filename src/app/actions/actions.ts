@@ -6,6 +6,7 @@ import mime from "mime";
 import { env } from "~/env";
 import path from "node:path";
 import getMediaType from "~/lib/getMediaType";
+import { revalidatePath } from "next/cache";
 
 export async function uploadFile(formData: FormData) {
 	const allowedFileTypes = [
@@ -66,4 +67,9 @@ export async function uploadFile(formData: FormData) {
 	}
 
 	//revalidatePath("/");
+}
+
+export async function revalidateGetProductCache(id: string) {
+	"use server";
+	revalidatePath(`/dashboard/product/${id}/edit`);
 }

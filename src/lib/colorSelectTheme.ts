@@ -38,10 +38,9 @@ const colorSelectTheme = {
 		control: ({ isFocused }) =>
 			`!shadow-none !bg-[#F2F1F0] ${isFocused ? "!border-dark/10" : "!border-[transparent]"}`,
 		singleValue: ({ data }) =>
-			`!text-dark/80 font-medium !py-0 ${dot(data.style)}`,
+			`!text-dark font-medium !py-0 ${dot(data.style)}`,
 		valueContainer: ({ isMulti }) => `${isMulti ? "!p-2.5" : "!p-3"}`,
-		input: ({ isMulti }) =>
-			`!text-dark/80 !m-0 ${isMulti ? "!p-0.5" : "!p-0"}`,
+		input: ({ isMulti }) => `!m-0 ${isMulti ? "!p-0.5" : "!p-0"}`,
 		option: ({ data }) =>
 			`cursor-pointer mt-1 rounded-md !px-3 !py-2 !text-sm !font-medium !text-dark ${dot(data.style)}`,
 	},

@@ -10,6 +10,7 @@ import InsertsEnum from "../avito/insertsEnum";
 
 const productSchema = zod
 	.object({
+		id: zod.string().optional(),
 		sku: zod.string().min(1, "Артикул обязателен для заполнения"),
 		name: zod.string().min(1, "Наименование обязательно для заполнения"),
 		description: zod.string().min(1, "Описание обязательно для заполнения"),

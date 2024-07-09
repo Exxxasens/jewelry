@@ -6,7 +6,7 @@ import {
 	useContextMenuState,
 } from "./ContextMenuProvider";
 
-interface MenuElementProps {
+export interface MenuElementProps {
 	icon?: React.ReactNode;
 	title?: string;
 	onClick?: () => void;
