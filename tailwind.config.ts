@@ -8,8 +8,8 @@ export default {
 			gridTemplateColumns: {
 				"upload-layout": "repeat(auto-fill, minmax(128px, 196px))",
 			},
-			gridTemplateRows: {
-				"upload-layout": "repeat(auto-fill, minmax(128px, 196px))",
+			gridAutoRows: {
+				"upload-layout": "minmax(128px, 196px)",
 			},
 			fontFamily: {
 				sans: ["var(--font-geist-sans)", ...fontFamily.sans],

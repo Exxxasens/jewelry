@@ -6,17 +6,17 @@ import ProductFrom from "~/components/Dashboard/Product/Form";
 import { type ProductSchema } from "~/lib/schemas/productSchema";
 import { api } from "~/trpc/react";
 
-interface UpdateProductFormProps {
+interface CopyProductFormProps {
 	defaultValues: DefaultValues<ProductSchema>;
 	id: string;
 }
 
-const UpdateProductForm: React.FC<UpdateProductFormProps> = ({
+const CopyProductForm: React.FC<CopyProductFormProps> = ({
 	id,
 	defaultValues,
 }) => {
 	const router = useRouter();
-	const { mutateAsync } = api.product.update.useMutation({
+	const { mutateAsync } = api.product.create.useMutation({
 		onSuccess: async () => {
 			await revalidateGetProductCache(id);
 			router.push(`/dashboard/product/`);
@@ -29,11 +29,11 @@ const UpdateProductForm: React.FC<UpdateProductFormProps> = ({
 
 	return (
 		<ProductFrom
-			buttonValue="Редактировать"
+			buttonValue="Создать"
 			onSubmit={onSubmit}
 			defaultValues={defaultValues}
 		/>
 	);
 };
 
-export default UpdateProductForm;
+export default CopyProductForm;

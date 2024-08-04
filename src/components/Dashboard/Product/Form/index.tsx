@@ -10,7 +10,6 @@ import {
 import productSchema, { type ProductSchema } from "~/lib/schemas/productSchema";
 import Select from "react-select";
 import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
-import { api } from "~/trpc/react";
 import productCategoriesOptions, {
 	type CategoriesOption,
 } from "~/lib/productCategoriesOptions";
@@ -34,6 +33,7 @@ import Uploader from "~/components/Uploader";
 const resolver = zodResolver(productSchema);
 
 interface ProductFormProps {
+	buttonValue?: string;
 	defaultValues?: DefaultValues<ProductSchema>;
 	onSubmit: (data: ProductSchema) => void;
 }
@@ -41,6 +41,7 @@ interface ProductFormProps {
 const ProductFrom: React.FC<ProductFormProps> = ({
 	defaultValues,
 	onSubmit,
+	buttonValue = "Создать",
 }) => {
 	const methods = useForm<ProductSchema>({
 		resolver,
@@ -100,7 +101,6 @@ const ProductFrom: React.FC<ProductFormProps> = ({
 										placeholder="Выберите категорию"
 										options={productCategoriesOptions}
 										isMulti={false}
-										isClearable={true}
 										isSearchable={true}
 										value={selected}
 										onBlur={onBlur}
@@ -419,7 +419,7 @@ const ProductFrom: React.FC<ProductFormProps> = ({
 							type="submit"
 							className="button-base border-none bg-dark/90 text-white"
 						>
-							Создать
+							{buttonValue}
 						</button>
 					</div>
 				</div>

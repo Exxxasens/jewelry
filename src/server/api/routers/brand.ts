@@ -1,11 +1,7 @@
-import {
-	createTRPCRouter,
-	protectedProcedure,
-	publicProcedure,
-} from "~/server/api/trpc";
+import { adminProtectedProcedure, createTRPCRouter } from "~/server/api/trpc";
 
 export const brandRouter = createTRPCRouter({
-	fetchBrands: publicProcedure.query(({ ctx }) => {
+	fetchBrands: adminProtectedProcedure.query(({ ctx }) => {
 		return ctx.db.brand.findMany();
 	}),
 });

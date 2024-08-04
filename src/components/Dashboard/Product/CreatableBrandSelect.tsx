@@ -34,7 +34,6 @@ const CreatableBrandSelect: React.FC<CreatableBrandSelectProps> = (props) => {
 		<CreatableSelect
 			{...(selectTheme as SelectTheme<BrandSelectOption>)}
 			isMulti={false}
-			isClearable={true}
 			placeholder="Название бренда"
 			isSearchable={true}
 			isLoading={isLoading}

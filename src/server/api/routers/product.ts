@@ -2,65 +2,63 @@ import { ProductStatus } from "@prisma/client";
 import { z } from "zod";
 import productSchema from "~/lib/schemas/productSchema";
 
-import {
-	createTRPCRouter,
-	protectedProcedure,
-	publicProcedure,
-} from "~/server/api/trpc";
+import { adminProtectedProcedure, createTRPCRouter } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const productRouter = createTRPCRouter({
-	create: publicProcedure.input(productSchema).mutation(async ({ input }) => {
-		return db.product.create({
-			data: {
-				sku: input.sku,
-				name: input.name,
-				description: input.description,
-				category: input.category,
-				brand: input.brand
-					? {
-							connectOrCreate: {
-								where: {
-									name: input.brand,
+	create: adminProtectedProcedure
+		.input(productSchema)
+		.mutation(async ({ input }) => {
+			return db.product.create({
+				data: {
+					sku: input.sku,
+					name: input.name,
+					description: input.description,
+					category: input.category,
+					brand: input.brand
+						? {
+								connectOrCreate: {
+									where: {
+										name: input.brand,
+									},
+									create: {
+										name: input.brand,
+									},
 								},
-								create: {
-									name: input.brand,
-								},
+							}
+						: undefined,
+					color: input.color,
+					material: input.material,
+					probe: input.probe,
+					inserts: {
+						connectOrCreate: input.inserts.map((insert) => ({
+							where: {
+								type: insert,
 							},
-						}
-					: undefined,
-				color: input.color,
-				material: input.material,
-				probe: input.probe,
-				inserts: {
-					connectOrCreate: input.inserts.map((insert) => ({
-						where: {
-							type: insert,
-						},
-						create: {
-							type: insert,
-						},
-					})),
-				},
-				stones: input.stones,
-				price: input.price,
-				oldPrice: input.oldPrice,
-				weight: input.weight,
-				size: input.size,
-				productMedia: {
-					createMany: {
-						data: input.media.map((media) => ({
-							filename: media.filename,
-							order: media.order,
+							create: {
+								type: insert,
+							},
 						})),
 					},
+					stones: input.stones,
+					price: input.price,
+					oldPrice: input.oldPrice,
+					weight: input.weight,
+					size: input.size,
+					productMedia: {
+						createMany: {
+							data: input.media.map((media) => ({
+								filename: media.filename,
+								order: media.order,
+							})),
+						},
+					},
+					status: ProductStatus.Published,
 				},
-				status: ProductStatus.Published,
-			},
-		});
-	}),
+			});
+		}),
 
-	getDashboardProductList: publicProcedure
+	getDashboardProductList: adminProtectedProcedure
 		.input(z.object({ skip: z.number(), take: z.number() }))
 		.query(({ input }) => {
 			return db.product.findMany({
@@ -73,7 +71,7 @@ export const productRouter = createTRPCRouter({
 			});
 		}),
 
-	getProduct: publicProcedure
+	getProduct: adminProtectedProcedure
 		.input(z.object({ id: z.string() }))
 		.query(({ input }) => {
 			return db.product.findUnique({
@@ -91,60 +89,71 @@ export const productRouter = createTRPCRouter({
 			});
 		}),
 
-	update: publicProcedure.input(productSchema).mutation(async ({ input }) => {
-		if (!input.id) throw new Error("Product Not Found");
+	update: adminProtectedProcedure
+		.input(productSchema)
+		.mutation(async ({ input }) => {
+			if (!input.id) throw new Error("Product Not Found");
 
-		return db.product.update({
-			where: {
-				id: input.id,
-			},
-			data: {
-				sku: input.sku,
-				name: input.name,
-				description: input.description,
-				category: input.category,
-				brand: input.brand
-					? {
-							connectOrCreate: {
-								where: {
-									name: input.brand,
-								},
-								create: {
-									name: input.brand,
-								},
-							},
-						}
-					: undefined,
-				color: input.color,
-				material: input.material,
-				probe: input.probe,
-				inserts: {
-					deleteMany: {},
-					connectOrCreate: input.inserts.map((insert) => ({
-						where: {
-							type: insert,
-						},
-						create: {
-							type: insert,
-						},
-					})),
+			return db.product.update({
+				where: {
+					id: input.id,
 				},
-				stones: input.stones,
-				price: input.price,
-				oldPrice: input.oldPrice,
-				weight: input.weight,
-				size: input.size,
-				productMedia: {
-					deleteMany: {},
-					createMany: {
-						data: input.media.map((media) => ({
-							filename: media.filename,
-							order: media.order,
+				data: {
+					sku: input.sku,
+					name: input.name,
+					description: input.description,
+					category: input.category,
+					brand: input.brand
+						? {
+								connectOrCreate: {
+									where: {
+										name: input.brand,
+									},
+									create: {
+										name: input.brand,
+									},
+								},
+							}
+						: undefined,
+					color: input.color,
+					material: input.material,
+					probe: input.probe,
+					inserts: {
+						deleteMany: {},
+						connectOrCreate: input.inserts.map((insert) => ({
+							where: {
+								type: insert,
+							},
+							create: {
+								type: insert,
+							},
 						})),
 					},
+					stones: input.stones,
+					price: input.price,
+					oldPrice: input.oldPrice,
+					weight: input.weight,
+					size: input.size,
+					productMedia: {
+						deleteMany: {},
+						createMany: {
+							data: input.media.map((media) => ({
+								filename: media.filename,
+								order: media.order,
+							})),
+						},
+					},
+					status: ProductStatus.Published,
 				},
-				status: ProductStatus.Published,
-			},
-		});
-	}),
+			});
+		}),
+	remove: adminProtectedProcedure
+		.input(z.object({ id: z.string() }))
+		.mutation(async ({ input }) => {
+			return db.product.delete({
+				where: {
+					id: input.id,
+				},
+			});
+		}),
 });

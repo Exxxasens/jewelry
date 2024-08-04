@@ -4,15 +4,15 @@ import { notFound } from "next/navigation";
 import { type DefaultValues } from "react-hook-form";
 import { type ProductSchema } from "~/lib/schemas/productSchema";
 import { api } from "~/trpc/server";
-import UpdateProductForm from "./UpdateProductForm";
+import CopyProductForm from "./CopyProductForm";
 
-interface EditProductPageProps {
+interface CopyProductPageProps {
 	params: {
 		id: string;
 	};
 }
 
-const EditProductPage: React.FC<EditProductPageProps> = async ({ params }) => {
+const CopyProductPage: React.FC<CopyProductPageProps> = async ({ params }) => {
 	const product = await api.product.getProduct({ id: params.id });
 	if (!product) {
 		return notFound();
@@ -20,7 +20,7 @@ const EditProductPage: React.FC<EditProductPageProps> = async ({ params }) => {
 
 	const defaultValues: DefaultValues<ProductSchema> = {
 		id: params.id,
-		sku: product.sku,
+		sku: "",
 		name: product.name,
 		description: product.description ?? "",
 		category: product.category,
@@ -51,11 +51,11 @@ const EditProductPage: React.FC<EditProductPageProps> = async ({ params }) => {
 	return (
 		<div className="flex flex-col pb-4">
 			<div className="mb-8 text-2xl font-bold text-dark">
-				Редактирование товара
+				Копирование товара: &quot;{product.name}&quot;
 			</div>
-			<UpdateProductForm id={params.id} defaultValues={defaultValues} />
+			<CopyProductForm id={params.id} defaultValues={defaultValues} />
 		</div>
 	);
 };
 
-export default EditProductPage;
+export default CopyProductPage;

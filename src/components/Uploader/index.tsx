@@ -2,37 +2,51 @@
 
 import { type ChangeEvent, useState, useEffect, useCallback } from "react";
 import { produce } from "immer";
-import UploadingFile from "./UploadingFile";
-import ImagePreview from "./ImagePreview";
 import Loading from "../Loading";
-import getMediaURL from "~/utils/getImageURL";
 import { uploadFile } from "~/app/actions/actions";
-import VideoPreview from "./VideoPreview";
-import { PiX } from "react-icons/pi";
 import getMediaType from "~/lib/getMediaType";
 import { type MediaType } from "@prisma/client";
+import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import SortableMediaItem from "./SortableMediaItem";
+import { v4 as uuidv4 } from "uuid";
 
-interface UploadingFile {
+export interface LoadedFile {
 	order: number;
-	filename: string | null;
+	filename: string;
 	loading: boolean;
-	file?: File;
 	size?: number;
 	type?: MediaType;
 }
 
-type UploadedFile = Omit<UploadingFile, "file">;
+export interface FileItem extends Omit<LoadedFile, "filename"> {
+	id: string;
+	order: number;
+	filename: string | null;
+	loading: boolean;
+	file?: File;
+}
+
 type UploadingEndData = {
 	filename: string;
 	size: number;
 	type: MediaType;
 };
 
+function filterUploaded(
+	file: FileItem,
+): file is LoadedFile & { id: string; file?: File } {
+	if (file.filename) {
+		return true;
+	}
+	return false;
+}
+
 export interface UploaderProps {
 	allowUpload?: boolean;
 	limit?: number;
-	defaultValue?: UploadedFile[];
-	onChange?: (value: UploadedFile[]) => void;
+	defaultValue?: Omit<LoadedFile, "id">[];
+	onChange?: (value: LoadedFile[]) => void;
 }
 
 const Uploader: React.FC<UploaderProps> = ({
@@ -41,8 +55,11 @@ const Uploader: React.FC<UploaderProps> = ({
 	onChange,
 	defaultValue,
 }) => {
-	const [uploadingList, setUploadingList] = useState<UploadingFile[]>(
-		defaultValue ?? [],
+	const [uploadingList, setUploadingList] = useState<FileItem[]>(
+		defaultValue?.map((value) => ({
+			...value,
+			id: value.filename,
+		})) ?? [],
 	);
 
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -56,17 +73,19 @@ const Uploader: React.FC<UploaderProps> = ({
 
 		for (let i = 0; i < (limit ?? files.length); i++) {
 			const file = files.item(i);
-
 			if (file) fileArray.push(file);
 		}
 
 		setUploadingList((state) => {
-			const mappedFiles: UploadingFile[] = fileArray.map((item, i) => ({
-				file: item,
-				loading: false,
-				filename: null,
-				order: i,
-			}));
+			const mappedFiles: FileItem[] = fileArray.map((item, i) => {
+				return {
+					id: uuidv4().toString(),
+					file: item,
+					loading: false,
+					filename: null,
+					order: i,
+				};
+			});
 			return [...state, ...mappedFiles];
 		});
 
@@ -77,11 +96,8 @@ const Uploader: React.FC<UploaderProps> = ({
 	const onUploadingStart = useCallback((file: File) => {
 		setUploadingList(
 			produce((draft) => {
-				draft.forEach((draftItem) => {
-					if (draftItem.file === file) {
-						draftItem.loading = true;
-					}
-				});
+				const foundItem = draft.find((item) => item.file === file);
+				if (foundItem) foundItem.loading = true;
 			}),
 		);
 	}, []);
@@ -122,42 +138,75 @@ const Uploader: React.FC<UploaderProps> = ({
 		);
 	}, []);
 
-	useEffect(() => {
-		uploadingList.forEach(({ file, loading, filename }) => {
-			if (!filename && !loading && file) {
-				onUploadingStart(file);
+	const upload = useCallback(
+		async function upload(file: File) {
+			onUploadingStart(file);
+			const formData = new FormData();
+			formData.append("file", file);
+			if (file.name) {
+				formData.append("filename", file.name.toString());
+			}
 
-				const formData = new FormData();
-				formData.append("file", file);
-
-				if (file.name) {
-					formData.append("filename", file.name.toString());
+			try {
+				const data = await uploadFile(formData);
+				if (!data.result) {
+					return onUploadingError(file);
 				}
+				return onUploadingEnd(file, {
+					filename: data.result.filename,
+					size: data.result.size,
+					type: data.result.type,
+				});
+			} catch (error) {
+				console.log(error);
+				return onUploadingError(file);
+			}
+		},
+		[onUploadingEnd, onUploadingError, onUploadingStart],
+	);
 
-				uploadFile(formData)
-					.then((data) => {
-						if (!data.result) {
-							return onUploadingError(file);
-						}
-						return onUploadingEnd(file, {
-							filename: data.result.filename,
-							size: data.result.size,
-							type: data.result.type,
-						});
-					})
-					.catch(() => {
-						onUploadingError(file);
-					});
+	function handleDragEnd(event: DragEndEvent) {
+		const { active, over } = event;
+		if (over && active.id !== over.id) {
+			setUploadingList(
+				produce((items) => {
+					const oldIndex = items.findIndex(
+						(item) => item.id === active.id,
+					);
+					const newIndex = items.findIndex(
+						(item) => item.id === over.id,
+					);
+
+					if (newIndex === 0 && items[oldIndex]?.type === "Video") {
+						console.log(items[oldIndex].type, "oldIndex");
+						return;
+					}
+
+					if (oldIndex === 0 && items[newIndex]?.type === "Video") {
+						console.log(items[newIndex].type, "newIndex");
+						return;
+					}
+
+					return arrayMove(items, oldIndex, newIndex);
+				}),
+			);
+		}
+	}
+
+	useEffect(() => {
+		uploadingList.forEach((item) => {
+			if (item.loading === false && item.file && !item.filename) {
+				void upload(item.file);
 			}
 		});
-	}, [onUploadingEnd, onUploadingError, onUploadingStart, uploadingList]);
+	}, [upload, uploadingList]);
 
 	useEffect(() => {
 		if (!onChange) {
 			return;
 		}
 		onChange(
-			uploadingList.map((state, i) => {
+			uploadingList.filter(filterUploaded).map((state, i) => {
 				const type = state.type
 					? state.type
 					: state.file
@@ -177,6 +226,7 @@ const Uploader: React.FC<UploaderProps> = ({
 	}, [uploadingList]);
 
 	const isUploading = !!uploadingList.find((item) => item.loading);
+	const sortableMediaList = uploadingList.filter(filterUploaded);
 
 	return (
 		<div className="mt-8 flex flex-grow flex-col gap-4 rounded-md">
@@ -205,56 +255,28 @@ const Uploader: React.FC<UploaderProps> = ({
 			<div className="flex flex-col rounded-lg bg-[#F2F1F0] p-4">
 				<div className="card-heading">Медиа:</div>
 				{uploadingList.length > 0 && (
-					<div className="grid w-full grid-cols-upload-layout grid-rows-upload-layout gap-2 rounded-lg bg-white p-4">
-						{uploadingList.map((item, index) => {
-							if (item.loading) {
-								return <UploadingFile key={index} />;
-							}
-							if (item.type === "Image" && item.filename)
-								return (
-									<div
-										className="relative flex flex-col"
-										key={item.filename}
-									>
-										<ImagePreview
-											src={getMediaURL(item.filename)}
-											alt={item.filename}
-										/>
-										<button
-											className="absolute right-2 top-2 rounded-full border border-solid border-dark/10 bg-[#F2F1F0] p-0.5 hover:text-[tomato]"
-											type="button"
-											onClick={() =>
-												item.filename &&
-												onRemove(item.filename)
-											}
-										>
-											<PiX className="text-base" />
-										</button>
-									</div>
-								);
-							if (item.type === "Video" && item.filename) {
-								return (
-									<div
-										className="relative flex flex-col"
-										key={item.filename}
-									>
-										<VideoPreview
-											src={getMediaURL(item.filename)}
-										/>
-										<button
-											className="absolute right-2 top-2 rounded-full border border-solid border-dark/10 bg-[#F5F6FA] p-0.5 hover:text-[tomato]"
-											type="button"
-											onClick={() =>
-												item.filename &&
-												onRemove(item.filename)
-											}
-										>
-											<PiX className="text-base" />
-										</button>
-									</div>
-								);
-							}
-						})}
+					<div className="auto-rows-upload-layout grid w-full grid-cols-upload-layout gap-2 rounded-lg bg-white p-4">
+						<DndContext onDragEnd={handleDragEnd}>
+							<SortableContext items={uploadingList}>
+								{sortableMediaList.map((item) => (
+									<SortableMediaItem
+										key={item.id}
+										id={item.id}
+										filename={item.filename}
+										loading={item.loading}
+										type={item.type}
+										onRemove={onRemove}
+									/>
+									// id: string;
+									// order: number;
+									// filename: string | null;
+									// loading: boolean;
+									// file?: File;
+									// size?: number;
+									// type?: MediaType;
+								))}
+							</SortableContext>
+						</DndContext>
 					</div>
 				)}
 				{uploadingList.length === 0 && (

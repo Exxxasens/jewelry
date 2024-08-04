@@ -17,7 +17,6 @@ const MaterialSelect: React.FC<MaterialSelectProps> = (props) => {
 	return (
 		<Select
 			isMulti={false}
-			isClearable={true}
 			placeholder="Материал"
 			isSearchable={true}
 			options={productMaterialOptions}

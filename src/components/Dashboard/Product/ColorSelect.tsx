@@ -13,7 +13,6 @@ const ColorSelect: React.FC<ColorSelectProps> = (props) => {
 	return (
 		<Select
 			isMulti={false}
-			isClearable={true}
 			placeholder="Цвет"
 			isSearchable={true}
 			options={productColorOptions}

@@ -9,7 +9,7 @@ const VideoPreview: React.FC<React.HTMLProps<HTMLVideoElement>> = ({
 			controls
 			controlsList="nodownload"
 			preload="none"
-			className="h-full w-full"
+			className="h-full w-full object-cover"
 			{...rest}
 		>
 			<source src={src} type="video/mp4" />

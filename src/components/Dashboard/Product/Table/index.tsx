@@ -13,6 +13,7 @@ import {
 	useContextMenuActions,
 } from "~/components/ContextMenu/ContextMenuProvider";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface TableData {
 	image?: string;
@@ -25,11 +26,47 @@ interface TableData {
 }
 
 const ProductTable = () => {
-	const router = useRouter();
-	const { data: products } = api.product.getDashboardProductList.useQuery({
+	const [getDashboardQueryParams, setDashboardQueryParams] = useState({
 		take: 10,
 		skip: 0,
 	});
+
+	const router = useRouter();
+	const utils = api.useUtils();
+
+	const { mutateAsync } = api.product.remove.useMutation({
+		async onMutate({ id }) {
+			await utils.product.getDashboardProductList.cancel();
+			const data = utils.product.getDashboardProductList.getData();
+			utils.product.getDashboardProductList.setData(
+				getDashboardQueryParams,
+				(previousQuery) => {
+					if (!previousQuery) {
+						return;
+					}
+					return previousQuery.filter((data) => data.id !== id);
+				},
+			);
+			return {
+				data,
+			};
+		},
+		onError(_err, _params, ctx) {
+			if (ctx) {
+				utils.product.getDashboardProductList.setData(
+					getDashboardQueryParams,
+					ctx.data,
+				);
+			}
+		},
+		onSettled() {
+			void utils.product.getDashboardProductList.invalidate();
+		},
+	});
+
+	const { data: products } = api.product.getDashboardProductList.useQuery(
+		getDashboardQueryParams,
+	);
 
 	const { setContextMenu, showContextMenu, setPosition, hideContextMenu } =
 		useContextMenuActions();
@@ -48,7 +85,7 @@ const ProductTable = () => {
 				title: "Копировать",
 				icon: <FiPlus />,
 				handler() {
-					console.log("copy");
+					router.push(`/dashboard/product/${id}/copy`);
 				},
 			},
 			{
@@ -64,6 +101,12 @@ const ProductTable = () => {
 				title: "Удалить",
 				className: "delete",
 				icon: <FiTrash />,
+				handler() {
+					void mutateAsync({
+						id,
+					});
+					hideContextMenu();
+				},
 			},
 		];
 		setContextMenu(contextMenuItems);
@@ -75,13 +118,13 @@ const ProductTable = () => {
 		image: {
 			title: "Фото",
 			render: (image) => (
-				<div className="flex h-full items-center justify-center bg-dark/5 p-3">
+				<div className="flex h-24 w-full items-center justify-center bg-dark/5 p-3">
 					<Image
 						alt="img"
 						src={getMediaURL(image)}
 						width={96}
 						height={96}
-						className="rounded-sm bg-white object-contain"
+						className="h-full w-full rounded-sm bg-white object-contain"
 					/>
 				</div>
 			),
