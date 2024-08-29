@@ -23,6 +23,7 @@ export const env = createEnv({
 			process.env.VERCEL ? z.string() : z.string().url(),
 		),
 		MEDIA_PATH: z.string(),
+		VK_TOKEN: z.string()
 	},
 
 	/**
@@ -44,6 +45,7 @@ export const env = createEnv({
 		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 		NEXTAUTH_URL: process.env.NEXTAUTH_URL,
 		MEDIA_PATH: process.env.MEDIA_PATH,
+		VK_TOKEN: process.env.VK_TOKEN
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -86,6 +86,7 @@ const ProductTable = () => {
 				icon: <FiPlus />,
 				handler() {
 					router.push(`/dashboard/product/${id}/copy`);
+					hideContextMenu();
 				},
 			},
 			{
@@ -139,7 +140,7 @@ const ProductTable = () => {
 				</div>
 			),
 			tdClassNames: "h-0 pt-3",
-			thClassNames: "w-[10%] p-2 ",
+			thClassNames: "w-[10%] p-2",
 		},
 		name: {
 			title: "Наименование",

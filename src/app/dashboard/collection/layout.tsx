@@ -1,5 +1,3 @@
-import ProductTopbar from "~/components/Dashboard/Product/ProductTopbar";
-
 const CollectionPageLayout: React.FC<React.PropsWithChildren> = ({
 	children,
 }) => {

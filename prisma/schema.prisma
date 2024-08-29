@@ -142,6 +142,8 @@ model Product {
   oldPrice     Float?
   weight       Float?
   size         String?
+  VKMarketId    Int?
+
   status       ProductStatus
   category     ProductCategory
   brand        Brand?          @relation(fields: [brandName], references: [name])
@@ -151,6 +153,8 @@ model Product {
   stones       NumberOfStones?
   productMedia ProductMedia[]
   collection   Collection[]
+
+  SyncTask ExportTask[]
 }
 
 enum MediaType {
@@ -194,5 +198,33 @@ enum ProductStatus {
 model Collection {
   id       String    @id @default(cuid())
   name     String
+  createdAt  DateTime? @default(now())
+  products Product[]
+}
+
+enum TaskType {
+  ExportVK
+  ExportAvito
+}
+
+enum TaskState {
+  Scheduled
+  Started
+  Finished
+  Cancelled
+}
+
+model ExportTask {
+  id       String    @id @default(cuid())
+  name String
+  type TaskType
+  state TaskState
+
+  VKGroupId Int?
+
+  createdAt  DateTime @default(now())
+  startedAt DateTime? @default(now())
+  finishedAt DateTime?
+  
   products Product[]
 }

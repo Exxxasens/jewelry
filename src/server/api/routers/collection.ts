@@ -13,6 +13,19 @@ export const collectionRouter = createTRPCRouter({
 		.query(async ({ input }) => {
 			return db.collection.findMany({
 				where: {},
+				orderBy: {
+					createdAt: {
+						sort: "asc",
+						nulls: "last",
+					},
+				},
+				include: {
+					products: {
+						select: {
+							id: true,
+						},
+					},
+				},
 				take: input.take,
 				skip: input.skip,
 			});
@@ -34,6 +47,46 @@ export const collectionRouter = createTRPCRouter({
 							id: product,
 						})),
 					},
+				},
+			});
+		}),
+
+	updateProductsList: adminProtectedProcedure
+		.input(
+			z.object({
+				id: z.string(),
+				products: z.array(z.string()),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			return db.collection.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					products: {
+						set: input.products.map((id) => ({
+							id,
+						})),
+					},
+				},
+			});
+		}),
+
+	updateName: adminProtectedProcedure
+		.input(
+			z.object({
+				id: z.string(),
+				name: z.string(),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			return db.collection.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					name: input.name,
 				},
 			});
 		}),

@@ -26,7 +26,7 @@ const MenuElement: React.FC<MenuElementProps> = ({
 		<button
 			key={title}
 			onClick={onClick}
-			className="button-sm w-full justify-start whitespace-nowrap border-none"
+			className="button-sm w-full justify-start whitespace-nowrap border-none font-semibold"
 		>
 			{icon && (
 				<div className="mr-2 flex items-center justify-center">

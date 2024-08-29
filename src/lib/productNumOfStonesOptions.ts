@@ -5,15 +5,22 @@ export interface NumOfStonesOption {
 	label: string;
 }
 
-const productNumOfStonesOptions = [
-	{ value: NumberOfStones.One, label: "1" },
-	{ value: NumberOfStones.Two, label: "2" },
-	{ value: NumberOfStones.Three, label: "3" },
-	{ value: NumberOfStones.Four, label: "4" },
-	{ value: NumberOfStones.Five, label: "5" },
-	{ value: NumberOfStones.Six, label: "6" },
-	{ value: NumberOfStones.Scattering, label: "Россыпь" },
-	{ value: NumberOfStones.WithoutStones, label: "Без камней" },
-] satisfies NumOfStonesOption[];
+export const NumOfStonesMap: Record<NumberOfStones, string> = {
+	[NumberOfStones.One]: "1",
+	[NumberOfStones.Two]: "2",
+	[NumberOfStones.Three]: "3",
+	[NumberOfStones.Four]: "4",
+	[NumberOfStones.Five]: "5",
+	[NumberOfStones.Six]: "6",
+	[NumberOfStones.Scattering]: "Россыпь",
+	[NumberOfStones.WithoutStones]: "Без камней",
+};
+
+const productNumOfStonesOptions: NumOfStonesOption[] = Object.entries(
+	NumOfStonesMap,
+).map(([value, label]) => ({
+	value: value as NumberOfStones,
+	label,
+}));
 
 export default productNumOfStonesOptions;

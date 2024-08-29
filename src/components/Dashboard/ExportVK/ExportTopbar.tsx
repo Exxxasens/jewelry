@@ -1,31 +1,31 @@
 "use client";
 import ActiveLink from "../ActiveLink";
 
-const ProductTopbar = () => {
+const ExportTopbar = () => {
 	const activeBtnClass = "bg-indigo-600 text-white";
 
 	return (
 		<div className="mb-8 flex flex-row">
 			<div className="button-group">
-				<ActiveLink href="/dashboard/product" className="flex">
+				<ActiveLink href="/dashboard/export-vk" className="flex">
 					{(isActive) => (
 						<button
 							className={`button-sm ${
 								isActive ? activeBtnClass : ""
 							}`}
 						>
-							Все товары
+							Все выгрузки
 						</button>
 					)}
 				</ActiveLink>
-				<ActiveLink href="/dashboard/product/create" className="flex">
+				<ActiveLink href="/dashboard/export-vk/create" className="flex">
 					{(isActive) => (
 						<button
 							className={`button-sm ${
 								isActive ? activeBtnClass : ""
 							}`}
 						>
-							Добавить товар
+							Создать новую
 						</button>
 					)}
 				</ActiveLink>
@@ -34,4 +34,4 @@ const ProductTopbar = () => {
 	);
 };
 
-export default ProductTopbar;
+export default ExportTopbar;

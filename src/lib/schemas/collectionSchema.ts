@@ -5,7 +5,7 @@ const collectionSchema = zod.object({
 	name: zod.string(),
 	products: zod.array(
 		zod.object({
-			id: zod.string(),
+			productId: zod.string(),
 		}),
 	),
 });

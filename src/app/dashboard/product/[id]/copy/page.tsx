@@ -13,7 +13,7 @@ interface CopyProductPageProps {
 }
 
 const CopyProductPage: React.FC<CopyProductPageProps> = async ({ params }) => {
-	const product = await api.product.getProduct({ id: params.id });
+	const product = await api.product.getById({ id: params.id });
 	if (!product) {
 		return notFound();
 	}

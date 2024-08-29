@@ -64,7 +64,7 @@ const Sidebar = () => {
 					Выгрузка
 				</div>
 
-				<ActiveLink href="/dashboard/import-avito" exact={false}>
+				<ActiveLink href="/dashboard/export-avito" exact={false}>
 					{(isActive) => (
 						<Button
 							icon={<FiPackage />}
@@ -76,7 +76,17 @@ const Sidebar = () => {
 					)}
 				</ActiveLink>
 
-				<Button icon={<FiPackage />}>VK</Button>
+				<ActiveLink href="/dashboard/export-vk" exact={false}>
+					{(isActive) => (
+						<Button
+							icon={<FiPackage />}
+							type="button"
+							active={isActive}
+						>
+							VK
+						</Button>
+					)}
+				</ActiveLink>
 			</div>
 
 			<Button icon={<FiLogOut />} className="mt-auto">

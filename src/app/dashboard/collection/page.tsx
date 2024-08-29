@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CollectionItem from "~/components/Dashboard/Collection/Item";
 import { api } from "~/trpc/react";
 
 export default function CollectionPage() {
@@ -27,7 +28,7 @@ export default function CollectionPage() {
 		<main className="">
 			<div>
 				<button
-					className="button-base bg-dark"
+					className="button-base bg-indigo-600"
 					onClick={() => addCollection("Новая подборка")}
 				>
 					Добавить подборку
@@ -35,14 +36,14 @@ export default function CollectionPage() {
 			</div>
 			<div className="mb-8 mt-8 text-2xl font-bold text-dark">Все</div>
 			<div className="flex flex-col gap-4">
-				{collections?.map(({ id, name }) => {
-					return (
-						<div className="rounded-md bg-[#F2F1F0] p-4" key={id}>
-							<div className="text-base">{name}</div>
-							<div>{}</div>
-						</div>
-					);
-				})}
+				{collections?.map(({ id, name, products }) => (
+					<CollectionItem
+						key={id}
+						id={id}
+						name={name}
+						products={products}
+					/>
+				))}
 			</div>
 		</main>
 	);

@@ -7,7 +7,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import CategoryTag from "../CategoryTag";
 
 interface RowProps {
-	product: ArrayElement<RouterOutputs["product"]["get"]>;
+	product: ArrayElement<RouterOutputs["product"]["getDashboardProductList"]>;
 }
 
 const Row: React.FC<RowProps> = ({ product }) => {

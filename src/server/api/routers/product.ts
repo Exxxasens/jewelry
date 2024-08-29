@@ -71,10 +71,11 @@ export const productRouter = createTRPCRouter({
 			});
 		}),
 
-	getProduct: adminProtectedProcedure
+	getById: adminProtectedProcedure
 		.input(z.object({ id: z.string() }))
-		.query(({ input }) => {
-			return db.product.findUnique({
+		.query(async ({ input }) => {
+			console.log(input.id);
+			const product = await db.product.findFirst({
 				where: {
 					id: input.id,
 				},
@@ -87,6 +88,8 @@ export const productRouter = createTRPCRouter({
 					},
 				},
 			});
+
+			return product;
 		}),
 
 	update: adminProtectedProcedure
@@ -147,12 +150,54 @@ export const productRouter = createTRPCRouter({
 				},
 			});
 		}),
+
 	remove: adminProtectedProcedure
 		.input(z.object({ id: z.string() }))
 		.mutation(async ({ input }) => {
 			return db.product.delete({
 				where: {
 					id: input.id,
+				},
+			});
+		}),
+
+	searchByName: adminProtectedProcedure
+		.input(z.object({ query: z.string() }))
+		.query(async ({ input }) => {
+			if (input.query.length === 0) {
+				return [];
+			}
+			const found = await db.product.findMany({
+				where: {
+					name: {
+						contains: input.query,
+						mode: "insensitive",
+					},
+				},
+				include: {
+					productMedia: true,
+				},
+			});
+
+			console.log("trying to search: ", found);
+			return found;
+		}),
+
+	getByIds: adminProtectedProcedure
+		.input(
+			z.object({
+				ids: z.array(z.string()),
+			}),
+		)
+		.query(async ({ input }) => {
+			return db.product.findMany({
+				where: {
+					id: {
+						in: input.ids,
+					},
+				},
+				include: {
+					productMedia: true,
 				},
 			});
 		}),
