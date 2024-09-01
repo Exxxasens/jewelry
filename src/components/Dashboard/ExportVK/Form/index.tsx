@@ -29,7 +29,7 @@ const GroupSelect: React.FC<GroupSelectProps> = ({ control }) => {
 				<Select
 					isMulti={false}
 					isLoading={isLoading}
-					options={data?.items.map((element) => ({
+					options={data?.map((element) => ({
 						label: element.name,
 						value: element.id,
 					}))}
@@ -69,11 +69,6 @@ const ExportVKForm: React.FC<ExportVKFormProps> = ({ onSubmit }) => {
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<div className="flex flex-col">
-					<p className="card-heading label-required">Группа:</p>
-					<GroupSelect control={control} />
-				</div>
-
-				<div className="flex flex-col">
 					<p className="card-heading label-optional">Наименование:</p>
 					<input
 						className="input-base"
@@ -88,9 +83,20 @@ const ExportVKForm: React.FC<ExportVKFormProps> = ({ onSubmit }) => {
 				</div>
 
 				<div className="flex flex-col">
+					<p className="card-heading label-required">Группа:</p>
+					<GroupSelect control={control} />
+				</div>
+
+				<div className="flex flex-col">
 					<p className="card-heading label-required">Товары:</p>
 					<div>
-						<SelectProductTable />
+						<Controller
+							control={control}
+							name="products"
+							render={({ field: { onChange } }) => (
+								<SelectProductTable onChange={onChange} />
+							)}
+						/>
 					</div>
 					<div className="mt-4">
 						<button

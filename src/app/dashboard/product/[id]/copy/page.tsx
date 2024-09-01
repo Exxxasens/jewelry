@@ -50,7 +50,7 @@ const CopyProductPage: React.FC<CopyProductPageProps> = async ({ params }) => {
 
 	return (
 		<div className="flex flex-col pb-4">
-			<div className="mb-8 text-2xl font-bold text-dark">
+			<div className="heading-2xl">
 				Копирование товара: &quot;{product.name}&quot;
 			</div>
 			<CopyProductForm id={params.id} defaultValues={defaultValues} />

@@ -2,7 +2,7 @@ import type InsertsEnum from "~/lib/avito/insertsEnum";
 import { getColorLabel } from "~/lib/productColorOptions";
 import { InsertLabelsMap } from "~/lib/productInsertOptions";
 import { productMaterialOptionsMap } from "~/lib/productMaterialOptions";
-import { NumOfStonesMap } from "~/lib/productNumOfStonesOptions";
+import { numOfStonesMap } from "~/lib/productNumOfStonesOptions";
 import { type ProductsFromTask } from "~/server/api/routers/export";
 
 function formatInsert(insert: string) {
@@ -27,7 +27,7 @@ export default function createProductDescription(
 		inserts.length > 0
 			? `Вставки: ${inserts.map((insert) => formatInsert(insert.type)).join(", ")}.`
 			: "",
-		stones ? `Кол-во камней: ${NumOfStonesMap[stones]}` : "",
+		stones ? `Кол-во камней: ${numOfStonesMap[stones]}` : "",
 		size ? `Размер: ${size}` : "",
 		weight ? `Вес: ${weight}` : "",
 	];

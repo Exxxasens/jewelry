@@ -10,7 +10,6 @@ import {
 import { FiCheck, FiX } from "react-icons/fi";
 import { type CollectionSchema } from "~/lib/schemas/collectionSchema";
 import CollectionProductCard from "./ProductCard";
-import EmptyCard from "./CollectionProductForm";
 import CollectionProductForm from "./CollectionProductForm";
 import { api } from "~/trpc/react";
 
@@ -85,7 +84,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({
 			name: data.name,
 		});
 		onFormSubmit();
-		utils.collection.getAll.invalidate();
+		void utils.collection.getAll.invalidate();
 	}
 
 	function onEditEnd() {

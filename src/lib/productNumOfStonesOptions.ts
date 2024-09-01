@@ -5,7 +5,7 @@ export interface NumOfStonesOption {
 	label: string;
 }
 
-export const NumOfStonesMap: Record<NumberOfStones, string> = {
+export const numOfStonesMap: Record<NumberOfStones, string> = {
 	[NumberOfStones.One]: "1",
 	[NumberOfStones.Two]: "2",
 	[NumberOfStones.Three]: "3",
@@ -17,7 +17,7 @@ export const NumOfStonesMap: Record<NumberOfStones, string> = {
 };
 
 const productNumOfStonesOptions: NumOfStonesOption[] = Object.entries(
-	NumOfStonesMap,
+	numOfStonesMap,
 ).map(([value, label]) => ({
 	value: value as NumberOfStones,
 	label,

@@ -75,6 +75,10 @@
 		@apply absolute right-2 top-2 cursor-pointer border-none bg-transparent;
 	}
 
+	.heading-2xl {
+		@apply mb-8 text-2xl font-bold text-dark;
+	}
+
 	/* table */
 	.th-base {
 		@apply p-2 font-medium;

@@ -1,19 +1,21 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { api, type RouterOutputs } from "~/trpc/react";
+import { api } from "~/trpc/react";
 import getMediaURL from "~/utils/getImageURL";
 import CategoryTag from "../CategoryTag";
 import Status from "../Status";
 import { produce } from "immer";
-import { useFormContext } from "react-hook-form";
-import { type ExportVKSchema } from "~/lib/schemas/exportVKSchema";
 
-const SelectProductTable = () => {
-	const { setValue } = useFormContext<ExportVKSchema>();
+interface SelectProductTableProps {
+	onChange: (selectedProducts: { id: string }[]) => void;
+}
 
+const SelectProductTable: React.FC<SelectProductTableProps> = ({
+	onChange,
+}) => {
 	const [isAllSelected, setIsAllSelected] = useState(false);
 	const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-	const [getDashboardQueryParams, setDashboardQueryParams] = useState({
+	const [getDashboardQueryParams] = useState({
 		take: 10,
 		skip: 0,
 	});
@@ -68,11 +70,8 @@ const SelectProductTable = () => {
 	}
 
 	useEffect(() => {
-		return setValue(
-			"products",
-			selectedProducts.map((selected) => ({ id: selected })),
-		);
-	}, [selectedProducts, setValue]);
+		onChange(selectedProducts.map((selected) => ({ id: selected })));
+	}, [selectedProducts, onChange]);
 
 	const priceFormatter = new Intl.NumberFormat("ru-RU", {
 		style: "currency",

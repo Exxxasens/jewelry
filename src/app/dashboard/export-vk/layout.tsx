@@ -1,4 +1,4 @@
-import ExportTopbar from "~/components/Dashboard/ExportVK/ExportTopbar";
+import ExportVKTopbar from "~/components/Dashboard/ExportVK/ExportVKTopbar";
 
 const ExportVKPageLayout: React.FC<React.PropsWithChildren> = ({
 	children,
@@ -7,7 +7,7 @@ const ExportVKPageLayout: React.FC<React.PropsWithChildren> = ({
 		// TODO: color theme
 		<div className="flex flex-col">
 			<h1 className="page-heading">Выгрузка ВК</h1>
-			<ExportTopbar />
+			<ExportVKTopbar />
 			<div className="flex flex-col">{children}</div>
 		</div>
 	);

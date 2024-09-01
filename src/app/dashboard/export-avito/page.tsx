@@ -1,11 +1,13 @@
 "use client";
+
 import { TaskType } from "@prisma/client";
+import Link from "next/link";
 import TaskStateTag from "~/components/Dashboard/ExportVK/TaskStateTag";
 import { api } from "~/trpc/react";
 
-const ExportVKPage = () => {
+const ExportAvitoPage = () => {
 	const { data } = api.export.getExportTasks.useQuery({
-		type: TaskType.ExportVK,
+		type: TaskType.ExportAvito,
 	});
 
 	return (
@@ -15,6 +17,7 @@ const ExportVKPage = () => {
 				<thead>
 					<tr>
 						<th className="p-2 font-medium">Название задачи</th>
+						<th className="p-2 font-medium">Ссылка</th>
 						<th className="p-2 font-medium">Статус</th>
 						<th className="p-2 font-medium">Кол-во товаров</th>
 						<th className="p-2 font-medium">Дата начала</th>
@@ -30,7 +33,21 @@ const ExportVKPage = () => {
 										{task.name}
 									</div>
 								</td>
-
+								<td className="td-base">
+									<div className="td-div">
+										<Link
+											href={`/api/avito-xml/${task.id}`}
+											target="_blank"
+										>
+											<button
+												className="button-sm"
+												type="button"
+											>
+												Загрузить
+											</button>
+										</Link>
+									</div>
+								</td>
 								<td className="td-base">
 									<div className="td-div">
 										<TaskStateTag tag={task.state} />
@@ -62,4 +79,4 @@ const ExportVKPage = () => {
 	);
 };
 
-export default ExportVKPage;
+export default ExportAvitoPage;

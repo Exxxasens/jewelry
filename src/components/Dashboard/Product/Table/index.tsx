@@ -26,7 +26,7 @@ interface TableData {
 }
 
 const ProductTable = () => {
-	const [getDashboardQueryParams, setDashboardQueryParams] = useState({
+	const [getDashboardQueryParams] = useState({
 		take: 10,
 		skip: 0,
 	});

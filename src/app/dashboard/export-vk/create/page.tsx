@@ -12,9 +12,7 @@ const CreateExportVKTaskPage = () => {
 
 	return (
 		<div className="flex flex-col">
-			<div className="mb-8 text-2xl font-bold text-dark">
-				Новая выгрузка
-			</div>
+			<div className="heading-2xl">Новая выгрузка</div>
 			<ExportVKForm onSubmit={handleSubmit} />
 		</div>
 	);

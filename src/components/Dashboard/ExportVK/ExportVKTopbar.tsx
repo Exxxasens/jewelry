@@ -1,8 +1,8 @@
 "use client";
 import ActiveLink from "../ActiveLink";
 
-const ExportTopbar = () => {
-	const activeBtnClass = "bg-indigo-600 text-white";
+const ExportVKTopbar = () => {
+	const activeBtnClass = "!bg-indigo-600 text-white";
 
 	return (
 		<div className="mb-8 flex flex-row">
@@ -34,4 +34,4 @@ const ExportTopbar = () => {
 	);
 };
 
-export default ExportTopbar;
+export default ExportVKTopbar;

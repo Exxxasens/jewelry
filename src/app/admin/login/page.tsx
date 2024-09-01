@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import { signIn } from "next-auth/react";
-import { redirect, RedirectType, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Head from "next/head";
 
 const adminLoginSchema = zod.object({

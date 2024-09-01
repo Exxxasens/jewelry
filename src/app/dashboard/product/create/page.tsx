@@ -19,7 +19,7 @@ const CreateProductPage = () => {
 
 	return (
 		<div className="flex flex-col pb-8">
-			<h2 className="mb-8 text-2xl font-bold text-dark">Новый товар</h2>
+			<h2 className="heading-2xl">Новый товар</h2>
 			<ProductFrom onSubmit={onSubmit} />
 		</div>
 	);

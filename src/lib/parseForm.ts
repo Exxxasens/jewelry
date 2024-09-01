@@ -36,16 +36,16 @@ const parseForm = async (
 				const uniqueSuffix = `${Date.now()}-${Math.round(
 					Math.random() * 1e9,
 				)}`;
-				const ext = mime.getExtension(part.mimetype || "");
-				const filename = `${part.name || "unknown"}-${uniqueSuffix}.${
-					ext || "unknown"
+				const ext = mime.getExtension(part.mimetype ?? "");
+				const filename = `${part.name ?? "unknown"}-${uniqueSuffix}.${
+					ext ?? "unknown"
 				}`;
 				return filename;
 			},
 			filter: (part) => {
 				return (
 					part.name === "media" &&
-					(part.mimetype?.includes("image") || false)
+					(part.mimetype?.includes("image") ?? false)
 				);
 			},
 		});

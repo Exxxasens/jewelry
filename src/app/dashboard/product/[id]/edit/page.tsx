@@ -50,9 +50,7 @@ const EditProductPage: React.FC<EditProductPageProps> = async ({ params }) => {
 
 	return (
 		<div className="flex flex-col pb-4">
-			<div className="mb-8 text-2xl font-bold text-dark">
-				Редактирование товара
-			</div>
+			<div className="heading-2xl">Редактирование товара</div>
 			<UpdateProductForm id={params.id} defaultValues={defaultValues} />
 		</div>
 	);

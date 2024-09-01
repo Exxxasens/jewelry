@@ -10,7 +10,7 @@ import Image from "next/image";
 import useDebounce from "~/components/hooks/useDebounce";
 import { produce } from "immer";
 import { useFormContext } from "react-hook-form";
-import { CollectionSchema } from "~/lib/schemas/collectionSchema";
+import { type CollectionSchema } from "~/lib/schemas/collectionSchema";
 
 interface ProductSelectItemProps {
 	product: ArrayElement<RouterOutputs["product"]["searchByName"]>;

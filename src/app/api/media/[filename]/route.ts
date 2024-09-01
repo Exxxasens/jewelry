@@ -1,17 +1,17 @@
-import { type NextApiRequest } from "next";
-
 import fs from "fs";
 import path from "path";
 
 import { db } from "~/server/db";
 import { env } from "~/env";
+import { type NextRequest } from "next/server";
 
 const filePath = path.join(".", env.MEDIA_PATH);
 
-export async function GET(
-	request: NextApiRequest,
-	{ params }: { params: { filename: string } },
-) {
+interface RouteHandlerContext {
+	filename: string;
+}
+
+export async function GET(_req: NextRequest, params: RouteHandlerContext) {
 	const { filename } = params;
 
 	const foundFile = await db.media.findUnique({

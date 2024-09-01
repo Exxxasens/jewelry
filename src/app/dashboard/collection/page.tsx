@@ -6,12 +6,12 @@ import { api } from "~/trpc/react";
 
 export default function CollectionPage() {
 	const utils = api.useUtils();
-	const [getAllQueryInput, setGetAllQueryInput] = useState({
+	const [getAllQueryInput] = useState({
 		take: 10,
 		skip: 0,
 	});
 
-	const { data: collections, isLoading } =
+	const { data: collections } =
 		api.collection.getAll.useQuery(getAllQueryInput);
 
 	const { mutateAsync } = api.collection.create.useMutation({
