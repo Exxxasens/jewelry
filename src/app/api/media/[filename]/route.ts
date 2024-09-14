@@ -8,10 +8,12 @@ import { type NextRequest } from "next/server";
 const filePath = path.join(".", env.MEDIA_PATH);
 
 interface RouteHandlerContext {
-	filename: string;
+	params: {
+		filename: string;
+	};
 }
 
-export async function GET(_req: NextRequest, params: RouteHandlerContext) {
+export async function GET(_req: NextRequest, { params }: RouteHandlerContext) {
 	const { filename } = params;
 
 	const foundFile = await db.media.findUnique({

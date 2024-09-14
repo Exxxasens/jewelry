@@ -2,12 +2,13 @@ import { type NextRequest, NextResponse } from "next/server";
 import { db } from "~/server/db";
 
 interface RouteHandlerContext {
-	id: string;
+	params: {
+		id: string;
+	};
 }
 
-export async function GET(_req: NextRequest, params: RouteHandlerContext) {
+export async function GET(_req: NextRequest, { params }: RouteHandlerContext) {
 	const { id } = params;
-
 	const task = await db.exportTask.findUnique({
 		where: {
 			id,

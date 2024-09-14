@@ -9,7 +9,6 @@ export default function useDebounce<T>(value: T, delay = 500) {
 			setDebouncedValue(value);
 		}, delay);
 
-		// Cancel the timeout if value changes (also on delay change or unmount)
 		return () => {
 			clearTimeout(handler);
 		};

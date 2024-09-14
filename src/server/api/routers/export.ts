@@ -89,6 +89,7 @@ async function syncProduct(
 	const otherImages = image.slice(1, 5);
 
 	if (!mainImage) {
+		// if no image, then remove product from export...
 		return;
 	}
 
@@ -351,7 +352,7 @@ export const exportRouter = createTRPCRouter({
 			// if (response.status > 200) {
 			// }
 			return response.data.response.items.filter(
-				(group) => !group.is_closed,
+				(group) => group.is_closed,
 			);
 		} catch (error) {
 			console.log(error);
