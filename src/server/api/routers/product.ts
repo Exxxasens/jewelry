@@ -1,8 +1,12 @@
-import { ProductStatus } from "@prisma/client";
+import { ProductCategory, ProductStatus } from "@prisma/client";
 import { z } from "zod";
 import productSchema from "~/lib/schemas/productSchema";
 
-import { adminProtectedProcedure, createTRPCRouter } from "~/server/api/trpc";
+import {
+	adminProtectedProcedure,
+	createTRPCRouter,
+	publicProcedure,
+} from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const productRouter = createTRPCRouter({
@@ -71,10 +75,9 @@ export const productRouter = createTRPCRouter({
 			});
 		}),
 
-	getById: adminProtectedProcedure
+	getById: publicProcedure
 		.input(z.object({ id: z.string() }))
 		.query(async ({ input }) => {
-			console.log(input.id);
 			const product = await db.product.findFirst({
 				where: {
 					id: input.id,
@@ -195,6 +198,27 @@ export const productRouter = createTRPCRouter({
 					id: {
 						in: input.ids,
 					},
+				},
+				include: {
+					productMedia: true,
+				},
+			});
+		}),
+
+	getProductsByCategory: publicProcedure
+		.input(
+			z.object({
+				category: z.nativeEnum(ProductCategory).nullable(),
+			}),
+		)
+		.query(async ({ input }) => {
+			if (!input.category) {
+				return [];
+			}
+
+			return db.product.findMany({
+				where: {
+					category: input.category,
 				},
 				include: {
 					productMedia: true,

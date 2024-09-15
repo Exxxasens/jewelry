@@ -12,7 +12,7 @@ export type InsertOption =
 			label: string;
 	  };
 
-export const InsertLabelsMap: Record<InsertsEnum, string> = {
+export const insertLabelsMap: Record<InsertsEnum, string> = {
 	[InsertsEnum.Diamond]: "Бриллиант",
 	[InsertsEnum.Fianit]: "Фианит",
 	[InsertsEnum.Sapphire]: "Сапфир",
@@ -29,7 +29,7 @@ export const InsertLabelsMap: Record<InsertsEnum, string> = {
 };
 
 const productInsertOptions: InsertOption[] = Object.entries(
-	InsertLabelsMap,
+	insertLabelsMap,
 ).map(([value, label]) => ({
 	value: value as InsertsEnum,
 	label,

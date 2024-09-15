@@ -89,6 +89,10 @@
 	.td-div {
 		@apply flex h-full items-center justify-center rounded-l-md bg-dark/5 p-3;
 	}
+
+	.times-new-roman {
+		font-family: "Times New Roman", Times, serif;
+	}
 }
 
 @layer utilities {

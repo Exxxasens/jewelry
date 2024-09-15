@@ -19,7 +19,7 @@ const DashboardSidebarLayout: React.FC<React.PropsWithChildren> = async ({
 
 	return (
 		// TODO: color theme
-		<div className="flex max-h-screen flex-row overflow-auto">
+		<main className="flex max-h-screen flex-row overflow-auto">
 			<PopupContextProvider>
 				<ContextMenuProvider>
 					<Sidebar />
@@ -28,7 +28,7 @@ const DashboardSidebarLayout: React.FC<React.PropsWithChildren> = async ({
 					<Popup />
 				</ContextMenuProvider>
 			</PopupContextProvider>
-		</div>
+		</main>
 	);
 };
 

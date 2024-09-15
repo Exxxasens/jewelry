@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 const AdminLayout: React.FC<React.PropsWithChildren> = async ({ children }) => {
@@ -10,11 +9,9 @@ const AdminLayout: React.FC<React.PropsWithChildren> = async ({ children }) => {
 	}
 
 	return (
-		<SessionProvider>
-			<div className="flex h-full min-h-[100vh] w-full items-center justify-center">
-				{children}
-			</div>
-		</SessionProvider>
+		<div className="flex h-full min-h-[100vh] w-full items-center justify-center">
+			{children}
+		</div>
 	);
 };
 

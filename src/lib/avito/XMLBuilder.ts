@@ -8,9 +8,10 @@ import builder, { type XMLElement } from "xmlbuilder";
 import { getColorLabel } from "../productColorOptions";
 import { categoriesMap } from "../productCategoriesOptions";
 import { productMaterialOptionsMap } from "../productMaterialOptions";
-import type InsertsEnum from "./insertsEnum";
-import { InsertLabelsMap } from "../productInsertOptions";
+import InsertsEnum from "./insertsEnum";
+import { insertLabelsMap } from "../productInsertOptions";
 import { numOfStonesMap } from "../productNumOfStonesOptions";
+import { formatInsert } from "../formatInserts";
 
 // const result = builder
 // 	.create("Ads", { headless: true })
@@ -135,11 +136,7 @@ export default class AvitoXMLBuilder {
 		if (inserts && inserts.length > 0) {
 			const insertElement = adElement.ele("InsertStone");
 			inserts.forEach((insert) => {
-				insertElement.ele(
-					"Option",
-					{},
-					InsertLabelsMap[insert] || "Другое",
-				);
+				insertElement.ele("Option", {}, formatInsert(insert));
 			});
 		}
 

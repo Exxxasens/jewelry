@@ -1,7 +1,11 @@
-export default async function Home() {
+import Header from "~/components/Header";
+
+const Home = () => {
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-			test
+		<main className="flex min-h-screen flex-col">
+			<Header />
 		</main>
 	);
-}
+};
+
+export default Home;
