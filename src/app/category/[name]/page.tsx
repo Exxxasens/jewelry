@@ -1,18 +1,19 @@
 "use client";
 
 import { api } from "~/trpc/react";
-import { isCategoryName, type CategoryParamsProps } from "./layout";
+import { type CategoryParamsProps } from "./layout";
 import Image from "next/image";
 import getMediaURL from "~/utils/getImageURL";
 import Link from "next/link";
 import priceFormatter from "~/lib/priceFormatter";
+import isProductCategory from "~/lib/isProductCategory";
 
 const CategoryPage: React.FC<CategoryParamsProps> = ({ params }) => {
 	const { data } = api.product.getProductsByCategory.useQuery(
 		{
-			category: isCategoryName(params.name) ? params.name : null,
+			category: isProductCategory(params.name) ? params.name : null,
 		},
-		{ enabled: isCategoryName(params.name) },
+		{ enabled: isProductCategory(params.name) },
 	);
 
 	return (

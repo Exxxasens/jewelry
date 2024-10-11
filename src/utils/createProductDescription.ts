@@ -1,14 +1,14 @@
 import type InsertsEnum from "~/lib/avito/insertsEnum";
-import { getColorLabel } from "~/lib/productColorOptions";
-import { InsertLabelsMap } from "~/lib/productInsertOptions";
-import { productMaterialOptionsMap } from "~/lib/productMaterialOptions";
-import { numOfStonesMap } from "~/lib/productNumOfStonesOptions";
+import { getColorLabel } from "~/lib/options/color";
+import { insertLabelsMap } from "~/lib/options/inserts";
+import { productMaterialOptionsMap } from "~/lib/options/material";
+import { numOfStonesMap } from "~/lib/options/numOfStones";
 import { type ProductsFromTask } from "~/server/api/routers/export";
 
 function formatInsert(insert: string) {
-	const hasOwnProperty = Object.hasOwn(InsertLabelsMap, insert);
+	const hasOwnProperty = Object.hasOwn(insertLabelsMap, insert);
 	if (hasOwnProperty) {
-		return InsertLabelsMap[insert as InsertsEnum];
+		return insertLabelsMap[insert as InsertsEnum];
 	}
 	return insert;
 }

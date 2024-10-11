@@ -4,7 +4,7 @@ import Select, {
 } from "react-select";
 import productMaterialOptions, {
 	type MaterialOption,
-} from "~/lib/productMaterialOptions";
+} from "~/lib/options/material";
 import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
 
 type MaterialSelectProps = SelectProps<

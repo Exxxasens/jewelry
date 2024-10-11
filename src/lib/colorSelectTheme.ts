@@ -1,6 +1,6 @@
 import { type Theme } from "react-select";
 import selectTheme, { type SelectTheme } from "./selectTheme";
-import { type ColorOption } from "./productColorOptions";
+import { type ColorOption } from "./options/color";
 
 // const dot = (color = "transparent") => ({
 // 	alignItems: "center",

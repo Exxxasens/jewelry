@@ -1,5 +1,5 @@
 import { type ProductCategory } from "@prisma/client";
-import { categoriesMap } from "~/lib/productCategoriesOptions";
+import { categoriesMap } from "~/lib/options/categories";
 
 interface CategoryTagProps {
 	category: ProductCategory;

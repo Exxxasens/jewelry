@@ -68,18 +68,19 @@ model VerificationToken {
 }
 
 enum ProductCategory {
-  Rings
-  Earrings
-  Pendants
-  Bracelets
-  Piercing
-  Chains
-  Necklace
-  Charms
-  Brooches
-  CompleteSet
-  Religious
-  Other
+  Rings // Кольца
+  Earrings // Серьги
+  Pendants // Подвески
+  Bracelets // Браслеты
+  Piercing // Пирсинг
+  Chains // Цепочки
+  Necklace // Ожерелья
+  Charms // Шармы
+  Brooches // Броши
+  CompleteSet // Комплекты
+  Religious // Религиозные
+  Anklets // Браслет на ногу
+  Other // Другое
 }
 
 // Цвет
@@ -105,14 +106,15 @@ enum Color {
 
 // Материал
 enum Material {
-  Gold
-  Silver
-  Platinum
-  JewelryAlloy
-  Steel
-  Leather
-  PlatinumMetals
-  Other
+  Gold              // Золото
+  Silver            // Серебро
+  Platinum          // Платина
+  JewelryAlloy      // Ювелирный сплав
+  Steel             // Сталь
+  Leather           // Кожа
+  PlatinumMetals    // Платиновые металлы
+  Other             // Другое
+  IonSpraying       // Ионное напыление
 }
 
 enum NumberOfStones {

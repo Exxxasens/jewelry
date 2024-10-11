@@ -2,9 +2,7 @@ import { type GroupBase } from "react-select";
 import AsyncCreatableSelect, {
 	type AsyncCreatableProps,
 } from "react-select/async-creatable";
-import productInsertOptions, {
-	type InsertOption,
-} from "~/lib/productInsertOptions";
+import productInsertOptions, { type InsertOption } from "~/lib/options/inserts";
 import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
 
 type InsertSelectProps = AsyncCreatableProps<

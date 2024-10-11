@@ -1,5 +1,5 @@
 // Вставка
-enum InsertsEnum {
+enum AvitoInsertsEnum {
 	Diamond = "Diamond",
 	Fianit = "Fianit",
 	Sapphire = "Sapphire",
@@ -15,4 +15,4 @@ enum InsertsEnum {
 	Without = "Without",
 }
 
-export default InsertsEnum;
+export default AvitoInsertsEnum;

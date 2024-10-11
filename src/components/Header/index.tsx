@@ -1,7 +1,7 @@
 "use client";
 import { type PropsWithChildren, useState } from "react";
 import Navbar, { NavbarButtons } from "../Navbar";
-import { categoriesMap } from "~/lib/productCategoriesOptions";
+import { categoriesMap } from "~/lib/options/categories";
 import Link from "next/link";
 import { api } from "~/trpc/react";
 import Loading from "../Loading";

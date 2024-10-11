@@ -12,6 +12,7 @@ export const categoriesMap: Record<ProductCategory, string> = {
 	[ProductCategory.Brooches]: "Броши",
 	[ProductCategory.CompleteSet]: "Комплекты",
 	[ProductCategory.Religious]: "Религиозные изделия",
+	[ProductCategory.Anklets]: "Браслеты на ногу",
 	[ProductCategory.Other]: "Другое",
 };
 
@@ -20,11 +21,11 @@ export interface CategoriesOption {
 	label: string;
 }
 
-const productCategoriesOptions: CategoriesOption[] = Object.entries(
-	categoriesMap,
-).map(([value, label]) => ({
-	value: value as ProductCategory,
-	label: label,
-})) satisfies CategoriesOption[];
+const categoriesOptions: CategoriesOption[] = Object.entries(categoriesMap).map(
+	([value, label]) => ({
+		value: value as ProductCategory,
+		label: label,
+	}),
+) satisfies CategoriesOption[];
 
-export default productCategoriesOptions;
+export default categoriesOptions;

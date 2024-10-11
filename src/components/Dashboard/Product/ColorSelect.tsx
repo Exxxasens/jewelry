@@ -3,9 +3,7 @@ import Select, {
 	type Props as SelectProps,
 } from "react-select";
 import colorSelectTheme from "~/lib/colorSelectTheme";
-import productColorOptions, {
-	type ColorOption,
-} from "~/lib/productColorOptions";
+import productColorOptions, { type ColorOption } from "~/lib/options/color";
 
 type ColorSelectProps = SelectProps<ColorOption, false, GroupBase<ColorOption>>;
 

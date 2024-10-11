@@ -12,21 +12,19 @@ import Select from "react-select";
 import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
 import productCategoriesOptions, {
 	type CategoriesOption,
-} from "~/lib/productCategoriesOptions";
+} from "~/lib/options/categories";
 import CreatableBrandSelect from "../CreatableBrandSelect";
 import ColorSelect from "../ColorSelect";
 import MaterialSelect from "../MaterialSelect";
 import Probe from "../Probe";
-import productInsertOptions, {
-	type InsertOption,
-} from "~/lib/productInsertOptions";
+import productInsertOptions, { type InsertOption } from "~/lib/options/inserts";
 import InsertSelect from "../InsertSelect";
 import NumOfStonesSelect from "../NumOfStonesSelect";
 import { NumericFormat } from "react-number-format";
 import { type ChangeEvent } from "react";
-import productNumOfStonesOptions from "~/lib/productNumOfStonesOptions";
-import productMaterialOptions from "~/lib/productMaterialOptions";
-import productColorOptions from "~/lib/productColorOptions";
+import productNumOfStonesOptions from "~/lib/options/numOfStones";
+import productMaterialOptions from "~/lib/options/material";
+import productColorOptions from "~/lib/options/color";
 import InsertsEnum from "~/lib/avito/insertsEnum";
 import Uploader from "~/components/Uploader";
 
@@ -249,8 +247,10 @@ const ProductFrom: React.FC<ProductFormProps> = ({
 									});
 								});
 
-								function mapOptions(option: InsertOption) {
-									return option.value;
+								function mapOptions(
+									option: InsertOption,
+								): string {
+									return String(option.value);
 								}
 
 								return (

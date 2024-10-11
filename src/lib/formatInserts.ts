@@ -1,5 +1,5 @@
 import InsertsEnum from "./avito/insertsEnum";
-import { insertLabelsMap } from "./productInsertOptions";
+import { insertLabelsMap } from "./options/inserts";
 
 export function isInsertEnum(type: string): type is InsertsEnum {
 	if (type in InsertsEnum) {

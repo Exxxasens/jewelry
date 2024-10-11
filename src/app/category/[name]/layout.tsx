@@ -1,6 +1,6 @@
-import { ProductCategory } from "@prisma/client";
 import { type PropsWithChildren } from "react";
-import { categoriesMap } from "~/lib/productCategoriesOptions";
+import isProductCategory from "~/lib/isProductCategory";
+import { categoriesMap } from "~/lib/options/categories";
 
 export interface CategoryParamsProps {
 	params: {
@@ -8,19 +8,13 @@ export interface CategoryParamsProps {
 	};
 }
 
-export function isCategoryName(name: string): name is ProductCategory {
-	if (name in ProductCategory) {
-		return true;
-	}
-	return false;
-}
 const CategoryLayout: React.FC<PropsWithChildren<CategoryParamsProps>> = ({
 	params,
 	children,
 }) => {
 	const { name } = params;
 
-	if (!isCategoryName(name)) {
+	if (!isProductCategory(name)) {
 		return <div>Категория не найдена</div>;
 	}
 

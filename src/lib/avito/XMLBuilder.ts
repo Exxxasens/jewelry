@@ -5,13 +5,12 @@ import {
 	type ProductCategory,
 } from "@prisma/client";
 import builder, { type XMLElement } from "xmlbuilder";
-import { getColorLabel } from "../productColorOptions";
-import { categoriesMap } from "../productCategoriesOptions";
-import { productMaterialOptionsMap } from "../productMaterialOptions";
-import InsertsEnum from "./insertsEnum";
-import { insertLabelsMap } from "../productInsertOptions";
-import { numOfStonesMap } from "../productNumOfStonesOptions";
+import { getColorLabel } from "../options/color";
+import { categoriesMap } from "../options/categories";
+import { productMaterialOptionsMap } from "../options/material";
+import type InsertsEnum from "./insertsEnum";
 import { formatInsert } from "../formatInserts";
+import { numOfStonesMap } from "../options/numOfStones";
 
 // const result = builder
 // 	.create("Ads", { headless: true })
@@ -55,6 +54,11 @@ interface AdBase {
 }
 
 export default class AvitoXMLBuilder {
+	// transform categories for avito...
+	static transfromCategory() {
+		const avitoCategories = [];
+	}
+
 	static createHead() {
 		return builder
 			.create("Ads", { headless: true })

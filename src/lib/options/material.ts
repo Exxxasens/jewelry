@@ -16,11 +16,11 @@ export const productMaterialOptionsMap = {
 	[Material.Other]: "Другое",
 } as const;
 
-const productMaterialOptions: MaterialOption[] = Object.entries(
+const materialOptions: MaterialOption[] = Object.entries(
 	productMaterialOptionsMap,
 ).map(([value, label]) => ({
 	value: value as Material,
 	label: label as string,
 }));
 
-export default productMaterialOptions;
+export default materialOptions;

@@ -1,6 +1,6 @@
 import productNumOfStonesOptions, {
 	type NumOfStonesOption,
-} from "~/lib/productNumOfStonesOptions";
+} from "~/lib/options/numOfStones";
 import selectTheme, { type SelectTheme } from "~/lib/selectTheme";
 import Select, {
 	type GroupBase,

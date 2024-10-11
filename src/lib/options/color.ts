@@ -26,7 +26,7 @@ const ColorStyles = {
 	Burgundy: "before:bg-[#C71C3B]",
 } as const;
 
-const productColorOptions: ColorOption[] = Object.entries(ColorStyles).map(
+const colorOptions: ColorOption[] = Object.entries(ColorStyles).map(
 	([color, style]) => ({
 		value: Color[color as keyof typeof Color],
 		label: getColorLabel(color as keyof typeof Color),
@@ -58,4 +58,4 @@ export function getColorLabel(color: keyof typeof Color): string {
 	return colorLabels[color];
 }
 
-export default productColorOptions;
+export default colorOptions;

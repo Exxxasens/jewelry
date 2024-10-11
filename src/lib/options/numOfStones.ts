@@ -16,11 +16,11 @@ export const numOfStonesMap: Record<NumberOfStones, string> = {
 	[NumberOfStones.WithoutStones]: "Без камней",
 };
 
-const productNumOfStonesOptions: NumOfStonesOption[] = Object.entries(
+const numOfStonesOptions: NumOfStonesOption[] = Object.entries(
 	numOfStonesMap,
 ).map(([value, label]) => ({
 	value: value as NumberOfStones,
 	label,
 }));
 
-export default productNumOfStonesOptions;
+export default numOfStonesOptions;
