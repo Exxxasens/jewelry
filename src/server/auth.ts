@@ -6,12 +6,11 @@ import {
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import CredentialsException from "./exceptions/CredentialsException";
-import bcrypt from "bcrypt";
 import { type Adapter } from "next-auth/adapters";
 import { db } from "~/server/db";
 import { UserRole } from "@prisma/client";
 import { env } from "~/env";
-
+import bcryptjs from "bcryptjs";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -109,7 +108,7 @@ export const authOptions: NextAuthOptions = {
 					throw new CredentialsException();
 				}
 
-				const compareResult = await bcrypt.compare(
+				const compareResult = await bcryptjs.compare(
 					password,
 					user.password,
 				);
