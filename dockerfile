@@ -1,11 +1,9 @@
-# Use the official Node.js image as the base image
-FROM node:18 AS base
-
-# Set the working directory in the container
+# Stage 1: Build the app
+FROM node:18 AS builder
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files
-COPY package*.json ./
+# Copy only package.json and package-lock.json
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install
@@ -13,8 +11,17 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
-# Expose the port that the app runs on
+# Build the application
+RUN npx prisma generate
+RUN npm run build
+
+# Stage 2: Run the app
+FROM node:18-alpine
+WORKDIR /app
+
+# Copy built files from the previous stage
+COPY --from=builder /app ./
 EXPOSE 3000
 
-# Start the Next.js application in development mode
-CMD ["npm", "run", "dev"]
+# Use JSON array format for CMD
+CMD ["npm", "run", "start"]
