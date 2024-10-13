@@ -4,8 +4,9 @@ export interface MaterialOption {
 	value: Material;
 	label: string;
 }
+export type MaterialOptionMap = Record<Material, string>;
 
-export const productMaterialOptionsMap = {
+export const materialOptionsMap = {
 	[Material.Gold]: "Золото",
 	[Material.Silver]: "Серебро",
 	[Material.Platinum]: "Платина",
@@ -14,13 +15,14 @@ export const productMaterialOptionsMap = {
 	[Material.Leather]: "Кожа",
 	[Material.PlatinumMetals]: "Платиновые материалы",
 	[Material.Other]: "Другое",
-} as const;
+	[Material.IonSpraying]: "Ионное напыление",
+} satisfies MaterialOptionMap;
 
 const materialOptions: MaterialOption[] = Object.entries(
-	productMaterialOptionsMap,
+	materialOptionsMap,
 ).map(([value, label]) => ({
 	value: value as Material,
-	label: label as string,
+	label: label,
 }));
 
 export default materialOptions;

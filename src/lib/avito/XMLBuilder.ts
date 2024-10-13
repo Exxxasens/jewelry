@@ -7,7 +7,7 @@ import {
 import builder, { type XMLElement } from "xmlbuilder";
 import { getColorLabel } from "../options/color";
 import { categoriesMap } from "../options/categories";
-import { productMaterialOptionsMap } from "../options/material";
+import { materialOptionsMap } from "../options/material";
 import type InsertsEnum from "./insertsEnum";
 import { formatInsert } from "../formatInserts";
 import { numOfStonesMap } from "../options/numOfStones";
@@ -130,7 +130,7 @@ export default class AvitoXMLBuilder {
 		}
 
 		if (material) {
-			adElement.ele("Material", {}, productMaterialOptionsMap[material]);
+			adElement.ele("Material", {}, materialOptionsMap[material]);
 		}
 
 		if (probe) {

@@ -1,7 +1,7 @@
 import type InsertsEnum from "~/lib/avito/insertsEnum";
 import { getColorLabel } from "~/lib/options/color";
 import { insertLabelsMap } from "~/lib/options/inserts";
-import { productMaterialOptionsMap } from "~/lib/options/material";
+import { materialOptionsMap } from "~/lib/options/material";
 import { numOfStonesMap } from "~/lib/options/numOfStones";
 import { type ProductsFromTask } from "~/server/api/routers/export";
 
@@ -21,7 +21,7 @@ export default function createProductDescription(
 
 	const details = [
 		brandName ? `Бренд: ${brandName}` : "",
-		material ? `Материал: ${productMaterialOptionsMap[material]}` : "",
+		material ? `Материал: ${materialOptionsMap[material]}` : "",
 		color ? `Цвет: ${getColorLabel(color)}` : "",
 		probe ? `Проба: ${probe}` : "",
 		inserts.length > 0

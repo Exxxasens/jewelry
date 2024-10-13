@@ -4,14 +4,14 @@ import { notFound } from "next/navigation";
 import { formatInserts } from "~/lib/formatInserts";
 import priceFormatter from "~/lib/priceFormatter";
 import { getColorLabel } from "~/lib/options/color";
-import { productMaterialOptionsMap } from "~/lib/options/material";
+import { materialOptionsMap } from "~/lib/options/material";
 import { numOfStonesMap } from "~/lib/options/numOfStones";
 import { api } from "~/trpc/server";
 import getMediaURL from "~/utils/getImageURL";
 
 function getMaterial(material: string) {
-	if (material in productMaterialOptionsMap) {
-		return productMaterialOptionsMap[material as Material];
+	if (material in materialOptionsMap) {
+		return materialOptionsMap[material as Material];
 	}
 	return undefined;
 }
