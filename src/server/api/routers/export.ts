@@ -4,8 +4,8 @@ import { db } from "~/server/db";
 import { env } from "~/env";
 import { type Prisma, TaskState, TaskType } from "@prisma/client";
 import createProductDescription from "~/utils/createProductDescription";
-import path from "path";
-import fs from "fs";
+import path from "node:path";
+import fs from "node:fs";
 import z from "zod";
 import delay from "~/utils/delay";
 import exportAvitoSchema from "~/lib/schemas/exportAvitoSchema";
@@ -287,7 +287,6 @@ export const exportRouter = createTRPCRouter({
 
 			try {
 				const taskProducts = await getProductsFromTask(task.id);
-
 				const xmlString = AvitoXMLBuilder.build(
 					taskProducts.map((product) => {
 						const inserts = product.inserts
@@ -335,6 +334,7 @@ export const exportRouter = createTRPCRouter({
 
 				return updated;
 			} catch (error) {
+				console.log(error);
 				const errorString =
 					error instanceof Error
 						? `${error.message} | ${error.stack}`

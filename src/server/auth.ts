@@ -6,7 +6,7 @@ import {
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import CredentialsException from "./exceptions/CredentialsException";
-import { type Adapter } from "next-auth/adapters";
+import type { Adapter } from "next-auth/adapters";
 import { db } from "~/server/db";
 import { UserRole } from "@prisma/client";
 import { env } from "~/env";
